@@ -72,7 +72,8 @@
   `useChartColors` orqali temadan o'qiadi.
 - Logotip: `components/ui/MarsLogo.jsx` yangilandi — geometrik kichik harfli `mars°`
   wordmark (Poppins 600) + to'q sariq brend halqasi; `public/favicon.svg`,
-  `mars-logo.svg`, `mars-logo-white.svg` yangilandi.
+  `mars-logo.svg`, `mars-logo-white.svg` yangilandi. Logotipning kichik harfli
+  `mars°` ko'rinishi Mirobid tomonidan tasdiqlandi.
 
 ### FE-04 — 12-muammo: Students Count by Course (bajarildi)
 
