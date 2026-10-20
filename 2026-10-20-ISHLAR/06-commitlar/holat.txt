@@ -1,0 +1,28 @@
+MARS LMS — 2026-10-20 yakuniy holat
+====================================
+
+SERVERLAR (ishga tushirilgan):
+  Backend  : http://localhost:7000  (mars-backend, in-memory Mongo + seed)
+  Frontend : http://localhost:5180  (mars-ceo, HMR)
+  Swagger  : http://localhost:7000/api-docs
+  Login    : ceo@mars.uz / secret123
+
+REPO HOLATI (barchasi toza, remote bilan sinxron):
+  LMS-JAMOL/mars-ceo              main  d989016
+  nF-2781/mars-backend            feat/intern-api  bd32b2d
+  nF-2781/mars-team (workspace)   main  b6a76b2
+  nF-2781/mars-admin              main  80ec547
+  nF-2781/mars-audit              main  0badcb3
+  nF-2781/mars-branch-manager     main  e36916a
+  nF-2781/mars-finance            main  be2de3c
+  nF-2781/mars-frontend           main  bfd8e0e
+  nF-2781/mars-intern             main  7414851
+  nF-2781/mars-mentor             main  366eb66
+  nF-2781/mars-parent             main  c6de6f7
+  nF-2781/mars-student            main  04cd663  (jamoa versiyasi + backup/local-branding)
+  nF-2781/mars-tutor              main  c2cd8a4
+
+TESTLAR:
+  mars-backend: npm run test:students-report  -> 27 passed, 0 failed
+  mars-ceo    : npm run build                  -> ok (index 467 kB / gzip 145 kB)
+  Runtime     : 13/13 marshrut, 0 page error (dev + production build)
