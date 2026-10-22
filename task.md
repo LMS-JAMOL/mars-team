@@ -580,9 +580,22 @@ Quyidagi vazifalar yechimni o'ylab topish uchun emas, muammolarni o'rganish va t
 ### BP-02 — O'quvchi darsga kelmaganidagi moliyaviy qoida
 
 - **Mas'ul:** Optom
-- **Holat:** TODO
+- **Holat:** TODO (qoidalar PM'ning; texnik tomoni 2026-10-22 da aniqlashtirildi)
 - **Muddat:** 2026-10-31
 - **Bog'liq yo'nalishlar:** Backend, Finance, QA
+- **Hozirgi texnik holat (2026-10-22):**
+  - Backend allaqachon "kelmadi" uchun to'lov yaratadi: ketma-ket 1–3 kelmaslik
+    (`createAttendancePayment`), 3 dan keyin o'quvchi freeze bo'ladi
+    (`checkAndFreezeIfNeeded`), kelgan o'quvchiga +1 coin beriladi.
+  - **Bizning yangi qoidamiz to'lovni avtomatik qo'llaydi:** dars tugagach
+    (20:00) belgilanmagan o'quvchi "kelmadi" deb hisoblanadi — ya'ni mentor
+    belgi qo'ymasa, to'lov ham o'zi paydo bo'ladi.
+  - **Qolgan qism PM qaroriga bog'liq:** coin qoidasi (mentor to'lovining
+    o'zgarishi), qancha kun dan keyin to'lov, naqd/karta farqi, bekor qilish
+    shartlari.
+  - Mentor bugungi o'zgartirishlari (sabab bilan) to'lovni **qayta hisoblamaydi** —
+    kelgan o'quvchiga berilgan coin va yaratilgan to'lov o'zgarishmaydi. Bu
+    alohida masala (moliyaviy izoh kerak).
 
 ### BP-03 — Davomatning noto'g'ri belgilanishi
 
