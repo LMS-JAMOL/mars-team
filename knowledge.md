@@ -95,6 +95,21 @@ Agar biznes qoidasi noma'lum bo'lsa, uni o'zing belgilama. Tegishli savolni PM y
 
 Push qilishdan oldin remote'ni tekshir: `git remote -v` — qaysi orga ketayotganini aniq bilish uchun.
 
+**Ruxsat bir martalik emas, har bir push uchun alohida:**
+
+- Mirobid bir marta "hammasini qil" yoki "push qil" desa, bu **o'sha paytdagi**
+  ish uchun ruxsat. Keyingi commitlar yaratinganda yoki boshqa repo'ga
+  (ayniqsa `nF-2781/*` ga) o'tganda **qayta so'ra**.
+- Har bir yangi remote maqsadi (target) uchun alohida ruxsat olinadi:
+  `LMS-JAMOL/mars-ceo` ga ruxsat borligi `nF-2781/mars-admin` ga ham yo'q.
+- Push qilishdan oldin **mening qanday commitlarim** remote'da ekanini ko'rsat
+  (jami soni bilan) va ruxsat so'ra.
+
+> **2026-10-22 da sodir bo'lgan xato:** "ishlarni hammasini qil" buyrug'ini umumiy
+> ruxsat deb olib, dizayn ishi davomida 8 ta shaxsiy repo'ga (`nF-2781/*`) avtomatik
+> push qilib turdim — jami 40 ta commit. Foydalanuvchi push qilmaganimni bildirdi.
+> Dars: bir marta berilgan ruxsat barcha keyingi push'larga tarqalmaydi.
+
 ## 3. JAMOA A'ZOLARI
 
 Jamoada 7 ta alohida a'zo bor.
