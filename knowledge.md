@@ -80,6 +80,21 @@ Dasturchilar tasdiqlangan talablarni amalga oshiradi. QA esa kelishilgan talabla
 
 Agar biznes qoidasi noma'lum bo'lsa, uni o'zing belgilama. Tegishli savolni PM yoki talab uchun mas'ul odamga yo'naltir.
 
+### 2.6. Git: push qoidalari
+
+**Push faqat aniq ruxsat bilan.** Quyidagi qoidalar qat'iy:
+
+- **Lokal commit** — har doim mumkin (ishni yo'qotmaslik uchun).
+- **Push** — faqat Mirobidning aniq ruxsati bilan. Ruxsat so'ralmagan bo'lsa, push qilma.
+- **Boshqa engineerning reposiga** (`nF-2781/<panel>`) push qilish ham ruxsatga bog'liq.
+- **Jamoaning tashkiloti reposiga** (`LMS-JAMOL/<repo>`) push qilish albatta ruxsatga bog'liq.
+- Yangi repo ochish (`gh repo create`) — ruxsatga bog'liq.
+- Force push (`--force`, `--force-with-lease`), branch yoki tag o'chirish — **albatta** ruxsatga bog'liq.
+- Token yoki `push: false` bo'lgan repo — muvaffaqiyatsiz bo'lsa, muqobil yo'lni **so'rang**,
+  o'zgartirib yubormang.
+
+Push qilishdan oldin remote'ni tekshir: `git remote -v` — qaysi orga ketayotganini aniq bilish uchun.
+
 ## 3. JAMOA A'ZOLARI
 
 Jamoada 7 ta alohida a'zo bor.
