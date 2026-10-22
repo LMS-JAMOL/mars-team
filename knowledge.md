@@ -447,6 +447,11 @@ Har bir rang o'zining aniq texnik qiymatlari (HEX, RGB, CMYK) va brend ma'nosiga
 | **Och Rejim Foni (Light Background)**| `#F8F9FD` | `248, 249, 253` | — | Tizim sahifalarining yorug' rejimdagi qulay foni. |
 | **Chegara / Border (Light)** | `#E2E6F2` | `226, 230, 242` | — | Kirish maydonlari (input) va kartalar chegarasi. |
 | **Neytral Matn (Muted Text)** | `#687594` | `104, 117, 148` | — | Yordamchi matnlar, placeholderlar, izohlar. |
+| **Mars Navigatsiya Ko'ki (Nav Navy)** | `#172A4E` | `23, 42, 78` | — | Navbar (topbar) va sidebar brend bloki — **light rejimda**. To'q rejimda bu bloklar `base-100` (to'q) rangda qoladi. |
+| **Mars Matn Rangi (Base Content)** | `#232936` | `35, 41, 54` | — | Asosiy matn rangi (light rejim, `base-content`). To'q rejimda `#ECEEF3`. |
+
+> **2026-10-22 tasdiqlangan qaror (Mirobid):** mavzu matn rangi `#232936` — brend
+> navy `#0D0D5B` emas. Barcha mavzular shu qiymatdan foydalanadi.
 
 ### 11.3. Tipografiya (Typography)
 
@@ -472,6 +477,11 @@ Loyiha bo'ylab shriftlar quyidagi ierarxiya bo'yicha ulanadi va ishlatiladi:
        font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
      }
      ```
+
+> **2026-10-22 tasdiqlangan qaror (Mirobid):** logotip wordmark'i **Poppins 600**
+> bilan — kichik harfli `mars°` (brend aylanasi `#F44516`). Yuqoridagi CHANEY/Pilat
+> Extended va katta `MARS` yozuvi **almashtirildi**: joriy wordmark rasmga mos
+> kichik harfli lockup, u barcha panellarda (`MarsLogo.jsx`, `.mars-wordmark`) qo'llanadi.
 
 ### 11.4. Logotip Tuzilishi va Ishlatish Qoidalari
 
@@ -515,7 +525,23 @@ Har bir frontend ilovada (`mars-admin`, `mars-frontend`, `mars-student`, va bosh
    - `/mars-logo-white.svg` — to'q fonlar uchun oq va olovrang vektor logotip.
    - `/mars-icon.svg` — mustaqil aylana piktogrammasi.
 
-### 11.6. UI Komponentlarini Qurish Bo'yicha AI uchun Qoidalar (Rules for AI)
+### 11.6. Dars jadvali (hali statik)
+
+> **2026-10-22 qaror (Mirobid):** dars kunlari **admin paneli qilinmaguncha statik**
+> qoladi. Sabab: jadvalni tasdiqlash uchun admin panelida boshqaruv kerak, u hali
+> yozilmagan (FE-01 / FE-02).
+
+| Qoida | Qiymat | Qayerda |
+|-------|--------|---------|
+| Dars kunlari | dushanba, chorshanba, juma (`[1, 3, 5]`) | `mars-mentor/src/config/courseSchedule.js`, `mars-backend/src/config/lessonSchedule.js` |
+| Dars tugash vaqti | 20:00 (`LESSON_END_HOUR`) | xuddi shu fayllar |
+| Dars tugagach, belgilanmagan o'quvchi | **kelmadi (X)** deb hisoblanadi | `attendance.service.js` (`countMarks`), mentor matritsasi |
+| Kurs davomiyligi | 12 oy | `COURSES` |
+
+Admin paneli tayyor bo'lgach, jadval `schedule` maydoni (guruh yoki kurs modelida)
+orqali boshqariladi va ushbu jadval almashtiriladi.
+
+### 11.7. UI Komponentlarini Qurish Bo'yicha AI uchun Qoidalar (Rules for AI)
 
 Boshqa AI ushbu loyihada yangi komponent yoki sahifa yozayotganda quyidagi qoidalarga rioya qilishi shart:
 

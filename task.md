@@ -587,9 +587,31 @@ Quyidagi vazifalar yechimni o'ylab topish uchun emas, muammolarni o'rganish va t
 ### BP-03 — Davomatning noto'g'ri belgilanishi
 
 - **Mas'ul:** Optom
-- **Holat:** TODO
+- **Holat:** TODO (frontend qismi bajarilgan, PM tasdiqlashi kerak)
 - **Muddat:** 2026-10-31
 - **Bog'liq yo'nalishlar:** Frontend, Backend, QA
+- **Natija (2026-10-22, frontend + backend):**
+  - Mentor panelida davomat belgilash oqimi qurildi (avval umuman yo'q edi):
+    guruh → o'quvchilar → Keldi/Kelmadi → avto-save (Saqlash tugmasi yo'q).
+  - **O'zgartirish izohi:** `attendance.changes[]` — kim, qaysidan qaysiga, sabab,
+    qachon. CEO o'quvchi profilida ko'radi.
+  - **`present` belgisiz yozuv "kelgan" deb hisoblanmasdi** (mentorga to'lov xavfi) —
+    tuzatildi, belgisiz belgi "kelmadi" hisoblanadi.
+  - **Bir darsga ikki marta saqlash mumkin edi** (mentor ikki marta to'lanardi) —
+    endi `(group, lessonSession)` unique va takror saqlash 409 beradi.
+  - **Yangi qoida:** dars tugagach (20:00) belgilanmagan o'quvchi **kelmadi (X)**
+    deb hisoblanadi — matritsada ham, backend hisobdorligida ham.
+  - Mentor faqat o'z guruhini belgilaydi (server-side 403).
+- **Qolgan qismlar (to'liq yopish uchun):**
+  1. **Mentor kechagi darsni tuzatolmaydi** — UI faqat bugungi sanani tahrirlaydi
+     (backend PUT'da sana tekshiruvi yo'q, lekin imkoniyat yo'q). "Kechagi darsni
+     sabab bilan o'zgartirish" kerak.
+  2. **"Kutilgan darslar" hisobi** — dars kuni bo'lgan, lekin mentor umuman
+     yozmagan kunlar matritsada X ko'rinadi, ammo umumiy statistikada
+     (darslar soni, daraja) hisobga olmaydi.
+  3. **Coin va to'lov qoidasi** — kelmagan o'quvchi uchun to'lov/coin qoidalari
+     BP-02 bilan bog'liq, hali PM qarori yo'q.
+  4. **PM (Optom) biznes qarorini tasdiqlab** BP-03 ni DONE deb belgilashi kerak.
 
 ### BP-04 — Uy vazifasini topshirish muammosi
 

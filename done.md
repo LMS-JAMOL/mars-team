@@ -287,3 +287,15 @@
   `rgb(20,21,25)`; wordmark `rgb(255,255,255)`; 0 page error. Build: mars-ceo,
   mars-mentor, mars-admin muvaffaqiyatli.
 - Commit: 10 panelda `style(sidebar): paint the brand block in the brand navy`.
+
+### 2026-10-22 — Tasdiqlangan qarorlar (Mirobid)
+
+1. **Logotip shrifti — Poppins 600** (kichik harfli `mars°`) ✅ ruxsat berildi.
+   CHANEY/Pilat Extended varianti almashtirildi — `knowledge.md §11.3` ga yozildi.
+2. **Mavzu matn rangi — `#232936`** (brend navy `#0D0D5B` emas) ✅ ruxsat berildi.
+   `knowledge.md §11.2` ga "Mars Matn Rangi" tokeni qo'shildi.
+3. **Dars kunlari — admin paneli qilinmaguncha statik.** Dushanba, chorshanba, juma,
+   dars tugash 20:00. Sabab: jadvalni boshqarish uchun admin paneli kerak (FE-01 /
+   FE-02), u hali yozilmagan. `knowledge.md §11.6` ga yozildi.
+4. **Navbar/brend bloki `#172A4E`** — faqat light rejimda; to'q rejimda eski to'q holat.
+   `knowledge.md §11.2` ga "Mars Navigatsiya Ko'ki" tokeni qo'shildi.
