@@ -42,7 +42,53 @@
 - FE-03, FE-04, FE-05 va TEAM-03 holatlari hamda tegishli natijalar `task.md` va
   `done.md`da yangilandi.
 
-## 2026-10-20
+## 2026-10-21
+
+### BP-12 — Students Count by Course (12-muammo)
+
+- **Mas'ul:** Mirobid (frontend), jamoa (backend)
+- **Holat:** DONE
+- CEO panelida `/students-report` sahifasi qurildi: statistika kartalari, yo'nalishlar
+  bo'yicha hisob jadvali, Search / Branch / Course (ko'p, AND) / Student Status
+  filtrlari, o'quvchilar jadvali, o'quvchi profili va o'qish tarixi.
+- Backend jamoaning o'z implementatsiyasiga moslashdi (`GET /students/report/stats`,
+  `/students`, `/students/:id` — `LMS-JAMOL/MARS-backend` `main` branchida).
+- Backend kamchiligi tuzatildi: `byCourse` har bir kursni ikki marta qaytarardi
+  (guruhlash link obyekti bo'yicha edi) — endi bir qator va to'g'ri unikal son.
+- O'quvchi holati (`isActive`/`isFrozen`) va kurs holati (`enrollment.status`) alohida
+  saqlanadi: kursni tugatgan o'quvchi umumiy hisobda faol qoladi.
+- Tuzatish, jamoaning testi va dev infratuzilmasi `feat/dev-server-and-lms-seed`
+  branchida (`nF-2781/mars-backend`): `npm run dev:memory`, LMS seed fixture'lari,
+  `lastLoginAt` `/ceo/me` da, login rate limit sozlanadigan.
+- Tekshiruv: jamoaning 53 ta Student Report testi yashil, runtime 13/13 marshrut, 0 xato.
+- Hujjat: `mars-ceo/docs/PROBLEM-12-STUDENTS-REPORT.md`.
+
+## 2026-10-22
+
+### BP-06 — Mentor davomatni belgilay olmasligi (11-muammo)
+
+- **Mas'ul:** Mirobid (frontend), jamoa (backend)
+- **Holat:** DONE
+- `mars-mentor` paneli avval admin panelining nusxasi edi (3 fayl / 7 qator farq): mock
+  login, admin navigatsiyasi, davomat funksiyasi umuman yo'q. Endi haqiqiy mentor
+  autentifikatsiyasi (`POST /mentors/login` — email yoki telefon), mentor scope va
+  Dashboard / Davomat / Guruhlarim / O'quvchilar / Profile sahifalari bor.
+- Davomat oqimi PM yechimidagi ketma-ketlikka to'liq mos: guruh → dars (ixtiyoriy) →
+  o'quvchilar ro'yxati → «Keldi / Kelmadi» → Saqlash → tasdiq; xatolikda xabar va qayta
+  urinish; sahifa qayta ochilganda saqlangan belgilar tiklanadi.
+- Qoidalar: mentor faqat o'z guruhi (server-side 403), faqat bugungi sana (400),
+  belgilanmagan o'quvchi «Kelmadi» deb hisoblanmaydi — UI belgilanmaganlar sonini ko'rsatadi.
+- Backend tuzatilgan: `present` belgisiz yozuv "kelgan" deb hisoblanmasdi (mentorga to'lov
+  puli xavfi) va bir dars uchun ikki marta saqlash mumkin edi (mentor ikki marta
+  to'lanardi) — endi `(group, lessonSession)` unique va takror saqlash 409 beradi.
+- Mentor login limiteri endi `RATE_LIMIT_LOGIN_MAX` orqali sozlanadi (dev uchun 200).
+- Panel mars-ceo bilan bir xil stackda: React 19, Redux Toolkit + redux-persist, motion,
+  lucide, react-toastify, Tailwind v4 + daisyUI (MARS temalari, brend sariq
+  `rgb(244, 69, 22)`, oddiy qora ikonlar, "mars°" wordmark) + guard tizimi
+  (ProtectedRoute, ErrorBoundary, NotFound).
+- Seed'da mentor (`mentor@mars.uz` / `Mentor123`) va unga biriktirilgan guruhlar bor.
+- Tekshiruv: jamoaning 255 ta backend testi yashil; runtime login → guruh → o'quvchilar →
+  belgilash → saqlash (201) → qayta ochilganda tiklash, 0 page error.
 
 ### FE-03 — CEO Dashboard tuzilmasi (kengaytirilgan)
 

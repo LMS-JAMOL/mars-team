@@ -591,10 +591,27 @@ Quyidagi vazifalar yechimni o'ylab topish uchun emas, muammolarni o'rganish va t
 
 ### BP-06 — Mentor davomatni belgilay olmasligi
 
-- **Mas'ul:** Optom
-- **Holat:** TODO
+- **Mas'ul:** Mirobid (frontend), jamoa (backend)
+- **Holat:** DONE
 - **Muddat:** 2026-10-31
 - **Bog'liq yo'nalishlar:** Frontend, Backend, QA
+- **Natija:** Mentor paneli qurildi va davomat oqimi ishlaydi.
+  - `mars-mentor` paneli avval admin panelining nusxasi edi (3 fayl / 7 qator farq):
+    mock login, admin navigatsiyasi va davomat funksiyasi umuman yo'q edi. Endi haqiqiy
+    mentor autentifikatsiyasi (`POST /mentors/login` — email yoki telefon), mentor scope,
+    Dashboard / Davomat / Guruhlarim / O'quvchilar / Profile sahifalari bor.
+  - Davomat oqimi: guruh → dars (ixtiyoriy) → o'quvchilar ro'yxati → «Keldi / Kelmadi»
+    → Saqlash → tasdiq; xatolikda xabar va qayta urinish. Qayta ochilganda saqlangan
+    belgilar tiklanadi.
+  - Qoidalar: mentor faqat o'z guruhi (server-side 403), faqat bugungi sana (400),
+    belgilanmagan o'quvchi «Kelmadi» deb hisoblanmaydi (UI belgilanmaganlar sonini ko'rsatadi).
+  - Backend tuzatilgan: `present` belgisiz yozuv "kelgan" deb hisoblanmasdi (mentorga
+    to'lov puli xavfi) va bir dars uchun ikki marta saqlash mumkin edi (mentor ikki marta
+    to'lanardi) — endi `(group, lessonSession)` unique va takror saqlash 409 beradi.
+  - Mentor login limiteri endi `RATE_LIMIT_LOGIN_MAX` orqali sozlanadi (dev uchun 200).
+- **Tekshiruv:** jamoaning 255 ta backend testi yashil; runtime: login → guruh → o'quvchilar
+  → belgilash → saqlash (201) → qayta ochilganda tiklash, 0 page error.
+- **Hujjat:** `mars-mentor/README.md` va `mars-ceo/docs/PROBLEM-12-STUDENTS-REPORT.md` uslubida.
 
 ### BP-07 — Uy vazifalarining bajarilmasligi
 
@@ -633,10 +650,20 @@ Quyidagi vazifalar yechimni o'ylab topish uchun emas, muammolarni o'rganish va t
 
 ### BP-12 — Ta'lim yo'nalishlari bo'yicha o'quvchilar soni
 
-- **Mas'ul:** Optom
-- **Holat:** TODO
+- **Mas'ul:** Mirobid (frontend), jamoa (backend)
+- **Holat:** DONE
 - **Muddat:** 2026-10-31
 - **Bog'liq yo'nalishlar:** Frontend, Backend, QA
+- **Natija:** CEO panelida `/students-report` sahifasi — yo'nalishlar bo'yicha o'quvchilar soni.
+  - Backend: jamoaning o'z implementatsiyasi (`GET /students/report/stats | /students |
+    /students/:id`, `LMS-JAMOL/MARS-backend` `main` branchida). Uning `byCourse` da har bir
+    kurs ikki marta qaytarilayotgani tuzatildi (guruhlash butun link obyekti bo'yicha
+    edi) — endi bir qator va to'g'ri unikal son.
+  - Frontend: statistika kartalari, yo'nalishlar jadvali, Search / Branch / Course (AND) /
+    Student Status filtrlari, o'quvchilar jadvali, o'quvchi profili va o'qish tarixi.
+  - O'quvchi holati va kurs holati alohida: kursni tugatgan o'quvchi umumiy hisobda faol qoladi.
+- **Tekshiruv:** jamoaning 53 ta Student Report testi yashil; runtime 13/13 marshrut, 0 xato.
+- **Hujjat:** `mars-ceo/docs/PROBLEM-12-STUDENTS-REPORT.md`.
 
 ### BP-13 — Oylik kontrakt to'lovlari holati
 
