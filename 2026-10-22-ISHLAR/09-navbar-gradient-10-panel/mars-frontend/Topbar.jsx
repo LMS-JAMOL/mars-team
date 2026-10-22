@@ -8,15 +8,11 @@ export default function Topbar() {
   const navigate = useNavigate()
   const user = useSelector((s) => s.auth.user)
   const theme = useSelector((s) => s.ui.theme)
-  // The navbar carries one solid brand navy, and only in the light theme.
-  // The night theme keeps the plain dark bar, so the top-left corner stays
-  // the same colour as the sidebar.
-  const isDark = theme === 'night'
-  const barClass = isDark
-    ? 'bg-base-100 border-b border-base-300'
-    : 'bg-[#172A4E] border-b border-white/10'
-  const onBar = isDark ? '' : 'text-white/85 hover:bg-white/10'
-  const ringGap = isDark ? 'ring-offset-base-100' : 'ring-offset-transparent'
+  // The navbar carries one solid brand navy in every theme, so the top-left
+  // corner is one blue block next to the blue brand block of the sidebar.
+  const barClass = 'bg-[#172A4E] border-b border-white/10'
+  const onBar = 'text-white/85 hover:bg-white/10'
+  const ringGap = 'ring-offset-transparent'
 
   const handleLogout = () => {
     dispatch(logout())

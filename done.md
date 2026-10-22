@@ -249,6 +249,8 @@
 - **Faqat light rejimda** (`winter`) navbar ko'k; **night rejimda** eski ko'rinish
   qoladi (`bg-base-100`) — shunda navbar va sidebar **bir xil rangda** bo'ladi
   (chap yuqori burchak bir butun qora maydon).
+- **Keyingi tuzatish (foydalanuvchi talabi):** night rejimda ham navbar ko'k qoldi —
+  endi **ikki rejimda ham** `#172A4E`. Sabab: "dark mode da eski holatda qolayotsa".
 - Ko'k navbar ustida ikonkalar, foydalanuvchi nomi va tugmalar oq (`text-white/85`),
   avatar halqasining bo'shlig'i shaffof; night rejimda ular avvalgidek
   `base-content` rangida.
@@ -260,7 +262,7 @@
   `asideBg = rgb(255,255,255)`, tugmalar oq (85%), 0 page error. Build: mars-ceo,
   mars-mentor, mars-admin muvaffaqiyatli; qolgan 7 panelda `node_modules` yo'q.
 - Commit: 10 panelda `style(navbar): one solid navy in the light theme, plain bar in
-  night mode`.
+  night mode` va `style(navbar): keep the brand navy in the night theme too`.
 
 ### Global dizayn - sidebar tepa bloki (brend ko'k)
 
