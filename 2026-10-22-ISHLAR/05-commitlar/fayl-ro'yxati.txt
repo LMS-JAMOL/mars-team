@@ -1,0 +1,26 @@
+01-mentor-panel-davomat/
+  attendanceSlice.js  (6.3 KB)
+  courseSchedule.js  (1.9 KB)
+  GroupAttendance.jsx  (19.7 KB)
+  Login.jsx  (5 KB)
+  nav.js  (0.4 KB)
+  Sidebar.jsx  (5.9 KB)
+  Topbar.jsx  (2.5 KB)
+02-ceo-panel-guruhlar/
+  App.jsx  (3.2 KB)
+  GroupDetail.jsx  (6 KB)
+  Groups.jsx  (5.5 KB)
+  nav.js  (1 KB)
+  StudentsReport.jsx  (25.3 KB)
+  studentsReportSlice.js  (5.9 KB)
+03-backend-davomat-izoh/
+  attendance.models.js  (3.3 KB)
+  attendance.service.js  (28.3 KB)
+  group.service.js  (10.1 KB)
+04-hujjatlar/
+  done.md  (11.5 KB)
+  knowledge.md  (22 KB)
+  task.md  (28.8 KB)
+05-commitlar/
+  commitlar.txt  (4.5 KB)
+README.md  (4.1 KB)

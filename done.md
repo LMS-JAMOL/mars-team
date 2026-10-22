@@ -170,3 +170,24 @@
 - Seed'da mentor (`mentor@mars.uz` / `Mentor123`) va unga biriktirilgan guruhlar bor.
 - Tekshiruv: jamoaning 255 ta backend testi yashil; runtime login → guruh → o'quvchilar →
   belgilash → saqlash (201) → qayta ochilganda tiklash, 0 page error.
+
+### FE-04 - CEO panelida o'quvchilar guruh ichida (Guruhlar sahifasi)
+
+- **Mas'ul:** Mirobid
+- **Holat:** DONE (qisman - FE-04 ning qolgan qismi ochiq)
+- CEO panelidagi alohida "Students" sahifasi olib tashlandi: o'quvchilar endi o'z
+  guruhi orqali ko'rinadi (foydalanuvchi talabi - "Students page kerak emas").
+- `/groups` sahifasi qurildi: tepada qidiruv maydoni - ism, familiya yoki guruh nomi
+  bo'yicha; guruhlar kartalar ko'rinishida, har bir kartada filial, kurs, o'quvchi
+  soni va birinchi 4 ta o'quvchi nomi.
+- `/group/:groupId` sahifasi qurildi: guruh sarlavhasi (filial, kurs, mentor),
+  o'quvchilar soni kartasi, o'quvchilar jadvali (ism, telefon, yosh) va ichki qidiruv.
+- `config/nav.js` dan "Students" elementi va `App.jsx` dan `/students` marshruti
+  olib tashlandi; eski `/groups` EntityView marshruti bilan takrorlanish tuzatildi.
+- Backend `GET /groups` va `GET /groups/:id` javobiga `course` populate qo'shildi
+  (guruh kursini ko'rsatish uchun).
+- Tekshiruv: `npm run build` muvaffaqiyatli; runtime'da CEO login - Guruhlar -
+  qidiruv (ism/familiya/guruh nomi) - guruh ichiga o'tish tekshirildi:
+  9 guruh / 15 o'quvchi, "Ali" 4 guruh, "Valiyev" 2 guruh, guruh ichida to'liq
+  ro'yxat, 0 page error.
+- Lokal commit: `mars-ceo` `84c3012` (feat(groups): move the students inside the groups).

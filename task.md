@@ -198,6 +198,22 @@ yordamida render qilinadi. `framer-motion` importi `motion/react` ga o'tkazildi.
 - API integratsiyasi tekshirilishi.
 - Ish QA uchun tayyor bo'lishi.
 
+**Natija (2026-10-22 - CEO panelida o'quvchilar guruh ichida):**
+
+Foydalanuvchi talabi bo'yicha CEO panelidagi alohida "Students" sahifasi olib
+tashlandi - o'quvchilar endi o'z guruhi orqali ko'rinadi.
+
+- `mars-ceo/src/pages/Groups.jsx` - `/groups`: qidiruv maydoni (ism, familiya yoki
+  guruh nomi bo'yicha), guruh kartalari (filial, kurs, o'quvchi soni, birinchi
+  4 ta o'quvchi).
+- `mars-ceo/src/pages/GroupDetail.jsx` - `/group/:groupId`: o'quvchilar soni kartasi,
+  filial/kurs/mentor, o'quvchilar jadvali (ism, telefon, yosh) va ichki qidiruv.
+- `config/nav.js` dan "Students" elementi, `App.jsx` dan `/students` marshruti va
+  eski `/groups` EntityView marshruti olib tashlandi.
+- Backend `group.service.js` da `course` populate qo'shildi.
+- Tekshiruv: build muvaffaqiyatli; runtime'da qidiruv (ism/familiya/guruh) va
+  guruh ichidagi ro'yxat tekshirildi - 0 page error.
+
 ### FE-05 — Talaba frontend ishini ko'rib chiqish
 
 - **Mas'ul:** Mirobid

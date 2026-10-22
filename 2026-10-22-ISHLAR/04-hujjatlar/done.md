@@ -1,0 +1,193 @@
+## 2026-10-19
+
+### FE-03 — CEO Dashboard boshlang'ich tuzilmasi
+
+- **Mas'ul:** Mirobid
+- **Holat:** DONE
+- CEO panelining boshlang'ich tuzilmasi va sahifa/marshrutlari mavjud.
+- Build muvaffaqiyatli; 11 marshrut runtime'da tekshirilgani `task.md`da qayd etilgan.
+- API bog'liqliklari `mars-ceo/docs/CEO-DASHBOARD.md`da hujjatlashtirilgan.
+- Mirobid Team Lead taqsimotni tasdiqlagani va Backend bilan API kelishilgani haqida
+  tasdiq berdi.
+- Taqsimot: Overview/Profile/Login va Financial — Mirobid; Attendance/Homework va
+  ro'yxat sahifalari — frontend jamoasi. Guruhlangan sahifalarning aniq engineer
+  nomlari berilmagan va taxmin qilinmagan.
+- FE-04 hozir **BLOCKED**: grafiklar uchun haqiqiy ma'lumot doimiy bazaga
+  kiritilmaguncha ijobiy ssenariyni tekshirib bo'lmaydi. Ma'lumotlar qo'shilmagan.
+
+### FE-05 — Talaba frontend ishini ko'rib chiqish
+
+- **Mas'ul:** Mirobid
+- **Holat:** DONE (review vazifasi; topilgan tuzatishlar ochiq)
+- Student login tokensiz, himoyalangan `GET /admins` endpointiga murojaat qiladi;
+  Admin modelida parol select qilinmaydi va JSON javobidan chiqariladi. Endpoint
+  tekshiruvi `401 Missing bearer token` qaytardi.
+- Login mock token yaratadi; u backend JWT autentifikatsiyasidan o'tmaydi.
+- Panel marshrutlari admin/mentor/branch/group/student ro'yxatlari, login esa
+  "Admin panel" deb belgilangan. Talaba panelining tasdiqlangan scope'i noma'lum.
+- `entities.js`dagi `implemented: false` flaglari mavjud backend endpointlariga
+  mos emas.
+- Review natijalari va ochiq follow-up tuzatishlar `task.md`dagi FE-05 bo'limida
+  qayd etildi; tuzatishlar uchun mas'ullar belgilanmagan.
+- `mars-student` build tekshiruvi Vite dependency yo'qligi sababli bajarilmadi.
+
+### TEAM-03 — Hujjatlarni yuritish
+
+- **Mas'ul:** Mirobid
+- **Holat:** DONE
+- `knowledge.md`dagi vazifalar fayliga tegishli to'rtta eskirgan `tasks.md` havolasi
+  haqiqiy `task.md` fayl nomiga tuzatildi.
+- Jamoa rollari yoki umumiy jarayon bo'yicha tasdiqlangan yangi ma'lumot
+  bo'lmagani uchun taxminiy o'zgarish qo'shilmadi.
+- FE-03, FE-04, FE-05 va TEAM-03 holatlari hamda tegishli natijalar `task.md` va
+  `done.md`da yangilandi.
+## 2026-10-20
+
+### FE-03 — CEO Dashboard tuzilmasi (kengaytirilgan)
+
+- **Mas'ul:** Mirobid
+- **Holat:** DONE (yangilama)
+- Guard tizimi to'ldirildi: `routes/ErrorBoundary.jsx` (app va page variantlari) qo'shildi,
+  `NotFound` himoyalangan qismga catch-all sifatida ulandi, `ProtectedRoute` esa
+  `ErrorBoundary` ichida joylashtirildi. Noma'lum manzillar shell ichida 404 ko'rsatadi,
+  token yo'q bo'lsa `/login`ga yo'naltiriladi, render xatolari (jumladan lazy chunk
+  yuklanmasligi) ushlanadi va marshrut bo'yicha avtomatik tiklanadi.
+- To'rtta real xato topilib tuzatildi:
+  1. `Sidebar.jsx` lucide ikonlarni `{item.icon}` sifatida render qilgan (React #31) —
+     barcha sahifalar "Kutilmagan xatolik" ekraniga tushgan; ikon endi `<Icon />` sifatida,
+     `isComponentType` yordamida render qilinadi, `framer-motion` importi `motion/react`ga
+     o'tkazildi.
+  2. `ProtectedRoute` `meStatus === 'loading'` holatida bolalarni unmount qilgan — `Profile`
+     qayta mount bo'lib yana `fetchMe` so'ragan va cheksiz so'rov sikli hosil qilgan;
+     endi ekran mounted qoladi.
+  3. `condition` bilan bekor qilingan `fetchMe` so'rovi `rejected` bo'lib `meStatus='failed'`
+     qilgan; `action.meta?.condition` tekshiruvi qo'shildi.
+  4. Global rate limit (300/15 daqiqa) testlar tomonidan tugatilgan — `.env`da
+     `RATE_LIMIT_MAX=20000` (faqat dev uchun).
+- Global dizayn tizimi: `src/index.css`da daisyUI ichki temalari o'chirilib, brend palitrasiga
+  mos `winter` (yorug') va `night` (to'q) custom temalari yaratildi. Mars Olovrang
+  `#f44516` — primary; barcha ikonlar (lucide SVG) oddiy qora (`--color-base-content`).
+  `Sidebar.jsx` va `Login.jsx`dagi hardkod `#f44516` olib tashlandi, grafikalar
+  `useChartColors` orqali temadan o'qiadi.
+- Logotip: `components/ui/MarsLogo.jsx` yangilandi — geometrik kichik harfli `mars°`
+  wordmark (Poppins 600) + to'q sariq brend halqasi; `public/favicon.svg`,
+  `mars-logo.svg`, `mars-logo-white.svg` yangilandi. Logotipning kichik harfli
+  `mars°` ko'rinishi Mirobid tomonidan tasdiqlandi.
+
+### FE-04 — 12-muammo: Students Count by Course (bajarildi)
+
+- **Mas'ul:** Mirobid
+- **Holat:** 12-muammo DONE; FE-04 ning umumiy ro'yxat sahifalaridagi filtr va
+  pagination ishi ochiq qoladi.
+- Manba: `Downloads/Telegram Desktop/message.txt` (Backend + Frontend Specification, MVP).
+- Backend (`mars-backend`, branch `feat/intern-api`): `GET /students/report` —
+  `search`, `branch`, `course` (ko'p, AND), `studentStatus`, `page`, `limit`.
+  `src/services/studentsReport.service.js` hisob mantiqini bajaradi, Swagger hujjati
+  yangilandi (116 path).
+- Yangi entity yaratilmadi: mavjud `students`, `courses`, `groups`, `enrollment`,
+  `branch` modellari qo'llanildi. O'quvchi↔kurs bog'lanishi `enrollment` (kurs tarixi) va
+  `group` (joriy guruh) dan yig'iladi; har bir o'quvchi har bir yo'nalishda distinct
+  hisoblanadi. O'quvchi holati (`isActive`/`isFrozen`) va kurs holati
+  (`enrollment.status`) alohida saqlanadi.
+- Branch scope `utils/scope.js` orqali serverda tekshiriladi (fail-closed) — BM/Admin
+  boshqa filial ma'lumotini ololmaydi.
+- Frontend (`mars-ceo`): `src/pages/StudentsReport.jsx` — statistika kartalari
+  (Total/Active/Frozen/Archived, bosilsa status filtrini o'zgartiradi), yo'nalishlar
+  bo'yicha hisob jadvali (bosilsa kurs filtriga qo'shiladi), filtrlar (Search, Branch,
+  Course ko'p tanlovli AND bilan, Student Status), o'quvchilar jadvali (№, Name, Age,
+  Course, Branch, Status), pagination va o'quvchi profili modal oynasi;
+  `src/features/report/studentsReportSlice.js` Redux slice, nav, route va store reduceri
+  ulandi.
+- QA: `npm run test:students-report` — **27 passed, 0 failed** (spec §5 ssenariylari va
+  §9 qabul mezonlari). Runtime (Playwright, dev va production build): 13/13 marshrut,
+  0 page error.
+- Demo ma'lumot: `scripts/lms-fixtures.js` — 3 filial, 4 kurs, 10 guruh, 12 o'quvchi,
+  17 enrollment; har bir hisob qoidasi uchun maxsus holatlar bilan.
+
+### Dev muhiti va hujjatlar
+
+- **Mas'ul:** Mirobid
+- **Holat:** DONE
+- `mars-backend/scripts/dev-server.js` — bitta process'da in-memory MongoDB + CEO/LMS seed +
+  API (avvalgi `nodemon` qatlami olib tashlandi, ortiqcha child process'lar yo'qoldi).
+- `mars-backend/.env` — `MONGO_URI`, `JWT_SECRET`, `PORT`, `CEO_EMAIL`, `CEO_PASSWORD`;
+  `.env` `.gitignore`da, repo'ga kirmadi.
+- Hujjatlar: `mars-ceo/docs/PROBLEM-12-STUDENTS-REPORT.md` (12-muammo to'liq hujjati),
+  `mars-ceo/docs/CEO-DASHBOARD.md` (14-sahifa qo'shildi), `mars-ceo/README.md`
+  (guard jadvali va dizayn tizimi qo'shildi), `task.md` (FE-04 Natija bloki).
+- Kunlik hisobot: `2026-10-20-ISHLAR/` papkasi (28 fayl) va Telegram uchun
+  `Desktop/MARS-bugungi-hisobot.txt`.
+- Commit va push: `LMS-JAMOL/mars-ceo` (yangi repo, `main`), `nF-2781/mars-backend`
+  (`feat/intern-api`), `nF-2781/mars-team` (workspace) va qolgan 10 panel brend commitlari
+  bilan yangilandi. `mars-student`da jamoa o'z ishini qilgan edi — ularning ishi ustiga
+  yozilmadi, lokal jamoa versiyasiga sinxronlandi, brend ishi `backup/local-branding`
+  branch'ida saqlangan.
+
+## 2026-10-21
+
+### BP-12 — Students Count by Course (12-muammo)
+
+- **Mas'ul:** Mirobid (frontend), jamoa (backend)
+- **Holat:** DONE
+- CEO panelida `/students-report` sahifasi qurildi: statistika kartalari, yo'nalishlar
+  bo'yicha hisob jadvali, Search / Branch / Course (ko'p, AND) / Student Status
+  filtrlari, o'quvchilar jadvali, o'quvchi profili va o'qish tarixi.
+- Backend jamoaning o'z implementatsiyasiga moslashdi (`GET /students/report/stats`,
+  `/students`, `/students/:id` — `LMS-JAMOL/MARS-backend` `main` branchida).
+- Backend kamchiligi tuzatildi: `byCourse` har bir kursni ikki marta qaytarardi
+  (guruhlash link obyekti bo'yicha edi) — endi bir qator va to'g'ri unikal son.
+- O'quvchi holati (`isActive`/`isFrozen`) va kurs holati (`enrollment.status`) alohida
+  saqlanadi: kursni tugatgan o'quvchi umumiy hisobda faol qoladi.
+- Tuzatish, jamoaning testi va dev infratuzilmasi `feat/dev-server-and-lms-seed`
+  branchida (`nF-2781/mars-backend`): `npm run dev:memory`, LMS seed fixture'lari,
+  `lastLoginAt` `/ceo/me` da, login rate limit sozlanadigan.
+- Tekshiruv: jamoaning 53 ta Student Report testi yashil, runtime 13/13 marshrut, 0 xato.
+- Hujjat: `mars-ceo/docs/PROBLEM-12-STUDENTS-REPORT.md`.
+
+## 2026-10-22
+
+### BP-06 — Mentor davomatni belgilay olmasligi (11-muammo)
+
+- **Mas'ul:** Mirobid (frontend), jamoa (backend)
+- **Holat:** DONE
+- `mars-mentor` paneli avval admin panelining nusxasi edi (3 fayl / 7 qator farq): mock
+  login, admin navigatsiyasi, davomat funksiyasi umuman yo'q. Endi haqiqiy mentor
+  autentifikatsiyasi (`POST /mentors/login` — email yoki telefon), mentor scope va
+  Dashboard / Davomat / Guruhlarim / O'quvchilar / Profile sahifalari bor.
+- Davomat oqimi PM yechimidagi ketma-ketlikka to'liq mos: guruh → dars (ixtiyoriy) →
+  o'quvchilar ro'yxati → «Keldi / Kelmadi» → Saqlash → tasdiq; xatolikda xabar va qayta
+  urinish; sahifa qayta ochilganda saqlangan belgilar tiklanadi.
+- Qoidalar: mentor faqat o'z guruhi (server-side 403), faqat bugungi sana (400),
+  belgilanmagan o'quvchi «Kelmadi» deb hisoblanmaydi — UI belgilanmaganlar sonini ko'rsatadi.
+- Backend tuzatilgan: `present` belgisiz yozuv "kelgan" deb hisoblanmasdi (mentorga to'lov
+  puli xavfi) va bir dars uchun ikki marta saqlash mumkin edi (mentor ikki marta
+  to'lanardi) — endi `(group, lessonSession)` unique va takror saqlash 409 beradi.
+- Mentor login limiteri endi `RATE_LIMIT_LOGIN_MAX` orqali sozlanadi (dev uchun 200).
+- Panel mars-ceo bilan bir xil stackda: React 19, Redux Toolkit + redux-persist, motion,
+  lucide, react-toastify, Tailwind v4 + daisyUI (MARS temalari, brend sariq
+  `rgb(244, 69, 22)`, oddiy qora ikonlar, "mars°" wordmark) + guard tizimi
+  (ProtectedRoute, ErrorBoundary, NotFound).
+- Seed'da mentor (`mentor@mars.uz` / `Mentor123`) va unga biriktirilgan guruhlar bor.
+- Tekshiruv: jamoaning 255 ta backend testi yashil; runtime login → guruh → o'quvchilar →
+  belgilash → saqlash (201) → qayta ochilganda tiklash, 0 page error.
+
+### FE-04 - CEO panelida o'quvchilar guruh ichida (Guruhlar sahifasi)
+
+- **Mas'ul:** Mirobid
+- **Holat:** DONE (qisman - FE-04 ning qolgan qismi ochiq)
+- CEO panelidagi alohida "Students" sahifasi olib tashlandi: o'quvchilar endi o'z
+  guruhi orqali ko'rinadi (foydalanuvchi talabi - "Students page kerak emas").
+- `/groups` sahifasi qurildi: tepada qidiruv maydoni - ism, familiya yoki guruh nomi
+  bo'yicha; guruhlar kartalar ko'rinishida, har bir kartada filial, kurs, o'quvchi
+  soni va birinchi 4 ta o'quvchi nomi.
+- `/group/:groupId` sahifasi qurildi: guruh sarlavhasi (filial, kurs, mentor),
+  o'quvchilar soni kartasi, o'quvchilar jadvali (ism, telefon, yosh) va ichki qidiruv.
+- `config/nav.js` dan "Students" elementi va `App.jsx` dan `/students` marshruti
+  olib tashlandi; eski `/groups` EntityView marshruti bilan takrorlanish tuzatildi.
+- Backend `GET /groups` va `GET /groups/:id` javobiga `course` populate qo'shildi
+  (guruh kursini ko'rsatish uchun).
+- Tekshiruv: `npm run build` muvaffaqiyatli; runtime'da CEO login - Guruhlar -
+  qidiruv (ism/familiya/guruh nomi) - guruh ichiga o'tish tekshirildi:
+  9 guruh / 15 o'quvchi, "Ali" 4 guruh, "Valiyev" 2 guruh, guruh ichida to'liq
+  ro'yxat, 0 page error.
+- Lokal commit: `mars-ceo` `84c3012` (feat(groups): move the students inside the groups).
