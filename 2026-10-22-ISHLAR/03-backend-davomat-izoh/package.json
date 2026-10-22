@@ -1,0 +1,41 @@
+{
+  "name": "mars",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "dev:memory": "node scripts/dev-server.js",
+    "seed:lms": "node scripts/seed-lms.js",
+    "seed:all": "node scripts/seed-real.cjs",
+    "test:ceo": "node scripts/test-ceo.js",
+    "test:admin-mentor": "node scripts/test-admin-mentor.js",
+    "test:admin-panel": "node scripts/test-admin-panel.js",
+    "test:lms-core": "node scripts/test-lms-core.js",
+    "test:lms-advanced": "node scripts/test-lms-advanced.js",
+    "test:attendance": "node scripts/test-attendance.js",
+    "test:scope": "node scripts/test-scope.js",
+    "test:group-scope": "node scripts/test-group-scope.js",
+    "test:student-report": "node scripts/test-student-report.js",
+    "test": "node scripts/test-ceo.js && node scripts/test-admin-mentor.js && node scripts/test-admin-panel.js && node scripts/test-lms-core.js && node scripts/test-lms-advanced.js && node scripts/test-attendance.js && node scripts/test-scope.js && node scripts/test-group-scope.js && node scripts/test-student-report.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.5",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.9.5",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "mongodb-memory-server": "^11.3.0",
+    "nodemon": "^3.1.14"
+  }
+}

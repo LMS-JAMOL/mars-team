@@ -191,3 +191,23 @@
   9 guruh / 15 o'quvchi, "Ali" 4 guruh, "Valiyev" 2 guruh, guruh ichida to'liq
   ro'yxat, 0 page error.
 - Lokal commit: `mars-ceo` `84c3012` (feat(groups): move the students inside the groups).
+
+### OPS-02 - Panellarga kirish uchun login ma'lumotlari
+
+- **Mas'ul:** Mirobid
+- **Holat:** DONE
+- Sabab: `npm run dev` **haqiqiy** MongoDB'ga (`mongodb://localhost:27017/mars-lms`)
+  ulangan holda ishlayapti, lekin shu bazada faqat eski `ceo@mars.test` hisobi bor
+  edi; demo ma'lumotlar (3 filial, 3 kurs, 9 guruh, 12 o'quvchi, 17 enrollment,
+  mentor) esa faqat `npm run dev:memory`ning vaqtinchalik bazasida saqlangan edi.
+  Natijada ikkala panel ham "Invalid email or password" berdi.
+- Yechim: `npm run seed:all` (`scripts/seed-real.cjs`) — `.env`dagi MongoDB'ga
+  CEO hisobi va LMS demo ma'lumotlarini yozadi (takror ishga tushirsa xavfsiz:
+  mavjud hisob paroli saqlanadi).
+- Kirish ma'lumotlari:
+  - CEO paneli (http://localhost:5180) - `ceo@mars.uz` / `secret123` (`.env`dan)
+  - Mentor paneli (http://localhost:5178) - `mentor@mars.uz` / `Mentor123`
+- Tekshiruv: `POST /ceo/login` va `POST /mentors/login` 200 qaytardi; brauzerda CEO
+  login -> Guruhlar (9 guruh) -> guruh ichidagi o'quvchilar, mentor login ->
+  Dashboard ("Salom, Sardor", 9 guruh, 15 o'quvchi) - 0 page error.
+- Lokal commit: `mars-backend` `6a3114e` (feat(dev): seed the real database with one command).

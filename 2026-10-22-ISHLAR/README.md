@@ -60,6 +60,20 @@ guruh ichida to'liq ro'yxat · 0 page error.
 - `updateAttendance` farqni (`diff`) topadi va yozadi.
 - `getStudentAttendance` o'zgarishlarni qaytaradi — CEO o'quvchi profilida ko'radi.
 
+### 3.1 Login — panellarga kirish muammosi tuzatildi
+
+`npm run dev` **haqiqiy** MongoDB'ga ulangan holda ishlayapti (`mars-lms`), lekin
+shu bazada faqat eski `ceo@mars.test` hisobi bor edi — demo ma'lumotlar esa
+`npm run dev:memory`ning vaqtinchalik bazasida qolgan edi. Ikkala panel ham
+"Invalid email or password" berdi.
+
+- Yechim: `npm run seed:all` (`scripts/seed-real.cjs`) — `.env`dagi MongoDB'ga
+  CEO hisobi + LMS demo ma'lumotlarini yozadi. Takror ishga tushirsa xavfsiz.
+- **CEO paneli** (http://localhost:5180) — `ceo@mars.uz` / `secret123`
+- **Mentor paneli** (http://localhost:5178) — `mentor@mars.uz` / `Mentor123`
+- Tekshiruv: ikkala login ham 200 qaytardi; brauzerda CEO (9 guruh, guruh ichida
+  o'quvchilar) va mentor (9 guruh, 15 o'quvchi) panellari ishladi — 0 page error.
+
 ---
 
 ## 5. Tekshiruv natijalari
