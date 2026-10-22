@@ -94,9 +94,10 @@ Dars tugagach, belgi qo'yilmagan o'quvchi **kelmadi (X)** deb hisoblanadi.
 ### 3.3 Navbar rangi — 10 ta panel
 
 Navbar (topbar) **bir xil (solid) brend ko'kiga** `#172A4E` o'kildi — gradient emas.
-**Ikkala rejimda ham** (light va night) shu rang: night rejimda eski holatda
-qolmasin. Ko'k navbar ustida ikonkalar va ism oq (`text-white/85`).
-**Sidebar o'z rangida** (`bg-base-100`), lekin tepa brend bloki ko'k.
+**Faqat light rejimda.** Dark rejimda navbar va sidebar brend bloki **qorong'i**
+(eski holat) bo'lib qoladi. Light rejimda ikkalasi ko'k → chap yuqori burchak bir
+butun ko'k blok. Ko'k navbar ustida ikonkalar va ism oq (`text-white/85`).
+**Sidebar o'z rangida** (`bg-base-100`).
 
 Tuzatilgan panellar: `09-navbar-gradient-10-panel/`.
 

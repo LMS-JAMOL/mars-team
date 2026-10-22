@@ -7,6 +7,14 @@ import MarsIcon from '../ui/MarsIcon'
 
 export default function Sidebar() {
   const collapsed = useSelector((s) => s.ui.sidebarCollapsed)
+  const theme = useSelector((s) => s.ui.theme)
+
+  // The brand block is navy in the light theme and plain in the night theme,
+  // so it always matches the navbar next to it.
+  const brandClass =
+    theme === 'night'
+      ? 'bg-base-100 border-b border-base-300'
+      : 'bg-[#172A4E] border-b border-white/10'
 
   return (
     <motion.aside
@@ -15,7 +23,7 @@ export default function Sidebar() {
       className="hidden md:flex flex-col bg-base-100 border-r border-base-300 h-full overflow-hidden"
     >
       {/* Brand */}
-      <div className="flex items-center gap-3 px-4 h-16 border-b border-white/10 bg-[#172A4E] shrink-0">
+      <div className={`flex items-center gap-3 px-4 h-16 shrink-0 ${brandClass}`}>
         <MarsIcon variant="ring" className="w-10 h-10 shrink-0" />
         <AnimatePresence>
           {!collapsed && (

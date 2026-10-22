@@ -251,9 +251,12 @@
   (chap yuqori burchak bir butun qora maydon).
 - **Keyingi tuzatish (foydalanuvchi talabi):** night rejimda ham navbar ko'k qoldi —
   endi **ikki rejimda ham** `#172A4E`. Sabab: "dark mode da eski holatda qolayotsa".
-- Ko'k navbar ustida ikonkalar, foydalanuvchi nomi va tugmalar oq (`text-white/85`),
-  avatar halqasining bo'shlig'i shaffof; night rejimda ular avvalgidek
-  `base-content` rangida.
+- **Yakuniy qaror (foydalanuvchi aniqlashtirdi):** dark rejimda **ko'k bo'lmasin**,
+  **qorong'i (eski holat) bo'lsin**. Ko'k faqat **light rejimda**:
+  - light: navbar `bg-[#172A4E]`, sidebar brend bloki `bg-[#172A4E]` → bir butun ko'k
+    burchak, ikonkalar/ism oq (`text-white/85`), avatar halqasi shaffof.
+  - night: navbar `bg-base-100`, brend bloki `bg-base-100` → ikkalasi bir xil to'q,
+    ikonkalar `base-content` rangida (avvalgidek).
 - **Sidebar o'z rangida qoldi** (`bg-base-100`) — foydalanuvchi talabi.
 - Tuzatilgan panel: admin, audit, branch-manager, ceo, finance, frontend, intern,
   mentor, parent, tutor (10 ta).
@@ -262,7 +265,8 @@
   `asideBg = rgb(255,255,255)`, tugmalar oq (85%), 0 page error. Build: mars-ceo,
   mars-mentor, mars-admin muvaffaqiyatli; qolgan 7 panelda `node_modules` yo'q.
 - Commit: 10 panelda `style(navbar): one solid navy in the light theme, plain bar in
-  night mode` va `style(navbar): keep the brand navy in the night theme too`.
+  night mode`, `style(navbar): keep the brand navy in the night theme too` va
+  `style(theme): the brand navy belongs to the light theme only` (yakuniy holat).
 
 ### Global dizayn - sidebar tepa bloki (brend ko'k)
 
