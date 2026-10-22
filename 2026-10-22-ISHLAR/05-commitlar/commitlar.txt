@@ -1,33 +1,15 @@
-﻿=== mars-team (workspace) ===
+=== mars-team (workspace, remote: org = LMS-JAMOL/mars-team) ===
+2e19569  2026-10-22  docs: drop the 2026-10-20 report folder
+29feba7  2026-10-22  docs: add the 2026-10-22 daily report and record the CEO groups work
 b5339c6  2026-10-22  docs: collect the CEO groups pages and the mentor panel into the daily report
 0e0802b  2026-10-22  docs: add the Git push rules to the team knowledge base
 ff9e9b7  2026-10-22  docs: order the done.md sections by date and restore the 2026-10-20 report folder
 33841aa  2026-10-22  docs: restore the 2026-10-20 heading in done.md
 d232252  2026-10-22  docs: record the mentor panel and the Students Report work in task.md and done.md
 6fdc318  2026-10-21  chore: point the mars-backend gitlink at the report fix
-dba17b9  2026-10-21  chore: point the mars-backend gitlink at the team branch
-fc394e9  2026-10-20  docs: note the confirmed lowercase mars┬░ wordmark decision in done.md
 
---- holat (git status) ---
-R  2026-10-20-ISHLAR/08-mentor-panel-bugungi/GroupAttendance.jsx -> 2026-10-22-ISHLAR/01-mentor-panel-davomat/GroupAttendance.jsx
-R  2026-10-20-ISHLAR/08-mentor-panel-bugungi/Sidebar.jsx -> 2026-10-22-ISHLAR/01-mentor-panel-davomat/Sidebar.jsx
-R  2026-10-20-ISHLAR/08-mentor-panel-bugungi/Topbar.jsx -> 2026-10-22-ISHLAR/01-mentor-panel-davomat/Topbar.jsx
-R  2026-10-20-ISHLAR/08-mentor-panel-bugungi/courseSchedule.js -> 2026-10-22-ISHLAR/01-mentor-panel-davomat/courseSchedule.js
-R  2026-10-20-ISHLAR/08-mentor-panel-bugungi/nav.js -> 2026-10-22-ISHLAR/01-mentor-panel-davomat/nav.js
-RD 2026-10-20-ISHLAR/08-mentor-panel-bugungi/studentsReportSlice.js -> 2026-10-22-ISHLAR/01-mentor-panel-davomat/studentsReportSlice.js
-R  2026-10-20-ISHLAR/07-ceo-panel-yangi-sahifalar/App.jsx -> 2026-10-22-ISHLAR/02-ceo-panel-guruhlar/App.jsx
-R  2026-10-20-ISHLAR/07-ceo-panel-yangi-sahifalar/GroupDetail.jsx -> 2026-10-22-ISHLAR/02-ceo-panel-guruhlar/GroupDetail.jsx
-R  2026-10-20-ISHLAR/07-ceo-panel-yangi-sahifalar/Groups.jsx -> 2026-10-22-ISHLAR/02-ceo-panel-guruhlar/Groups.jsx
-R  2026-10-20-ISHLAR/07-ceo-panel-yangi-sahifalar/nav.js -> 2026-10-22-ISHLAR/02-ceo-panel-guruhlar/nav.js
- M done.md
- M task.md
-?? 2026-10-22-ISHLAR/01-mentor-panel-davomat/Login.jsx
-?? 2026-10-22-ISHLAR/01-mentor-panel-davomat/attendanceSlice.js
-?? 2026-10-22-ISHLAR/02-ceo-panel-guruhlar/StudentsReport.jsx
-?? 2026-10-22-ISHLAR/02-ceo-panel-guruhlar/studentsReportSlice.js
-?? 2026-10-22-ISHLAR/03-backend-davomat-izoh/
-?? 2026-10-22-ISHLAR/04-hujjatlar/
-?? 2026-10-22-ISHLAR/05-commitlar/
+--- holat ---
+ M 2026-10-22-ISHLAR/05-commitlar/commitlar.txt
 
 === mars-backend ===
 9d29a0b  2026-10-22  feat(attendance): keep an audit trail of the marks that were changed
@@ -39,7 +21,7 @@ a6f893b  2026-10-21  chore(dev): one-command dev server with in-memory Mongo and
 fa2d9c8  2026-10-21  feat(auth): expose lastLoginAt on /ceo/me
 326208f  2026-10-21  Merge remote-tracking branch 'origin/main' into jamoliddinFULL
 
---- holat (git status) ---
+--- holat ---
 (toza)
 
 === mars-ceo ===
@@ -49,10 +31,10 @@ fa2d9c8  2026-10-21  feat(auth): expose lastLoginAt on /ceo/me
 7836dcd  2026-10-21  feat(profile): make the profile page dynamic instead of static
 c7ed745  2026-10-21  feat(profile): rebuild the CEO profile page and fix the round avatar
 7868ab8  2026-10-20  style: make the night theme neutral black instead of navy
-5455352  2026-10-20  style: align theme tokens with the official MARS palette (knowledge.md ┬з11.2)
+5455352  2026-10-20  style: align theme tokens with the official MARS palette (knowledge.md §11.2)
 d989016  2026-10-20  feat(ceo): MARS CEO dashboard panel
 
---- holat (git status) ---
+--- holat ---
 (toza)
 
 === mars-mentor ===
@@ -65,6 +47,6 @@ a3ebdc8  2026-10-22  feat(mentor): month matrix on the course lesson days, group
 232f4eb  2026-10-22  feat(mentor): group pages in the sidebar with an attendance matrix
 753f483  2026-10-22  feat(mentor): build the mentor panel with the attendance flow (Problem #11)
 
---- holat (git status) ---
+--- holat ---
 (toza)
 

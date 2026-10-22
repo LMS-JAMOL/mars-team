@@ -5,6 +5,9 @@
 Bugun asosan **mentor paneli davomat oqimi** va **CEO panelida o'quvchilar guruh ichida**
 tuzildi. Kunlik ish natijalari bitta papkada: `2026-10-22-ISHLAR/`.
 
+> Eski `2026-10-20-ISHLAR/` papkasi kerak emas deb topildi va o'chirildi
+> (commit `2e19569`). O'chirilgan fayllar git tarixida (`8f300c9`) saqlanib qoladi.
+
 ---
 
 ## 1. Nima qilindi (qisqacha)
@@ -73,14 +76,20 @@ guruh ichida to'liq ro'yxat · 0 page error.
 
 ## 6. Commit va push holati
 
-| Repo | Lokal commit | Push |
-|------|--------------|------|
-| `LMS-JAMOL/mars-ceo` | `84c3012` (guruhlar), `8b2949d` (o'zgarishlar) | ruxsat kutilmoqda |
-| `LMS-JAMOL/mars-mentor` | `dcb3e17` (7 ta commit) | ruxsat kutilmoqda |
-| `LMS-JAMOL/mars-team` | `b5339c6` (workspace) | ruxsat kutilmoqda |
-| `LMS-JAMOL/MARS-backend` | `9d29a0b` (`feat/dev-server-and-lms-seed`) | **403 — `official-m` tokenida Write yo'q** |
+| Repo | Branch | Lokal commit | Push |
+|------|--------|--------------|------|
+| `LMS-JAMOL/mars-ceo` | `main` | `84c3012` (guruhlar), `8b2949d` (o'zgarishlar) | ✅ `9d87e56..84c3012` |
+| `LMS-JAMOL/mars-mentor` | `main` | `dcb3e17` (7 ta commit) | ✅ `753f483..dcb3e17` |
+| `LMS-JAMOL/mars-team` | `main` | `2e19569` (workspace + hisobot) | ✅ `ff9e9b7..2e19569` |
+| `LMS-JAMOL/MARS-backend` | `feat/dev-server-and-lms-seed` | `9d29a0b` | ❌ **403 — `official-m` tokenida Write yo'q** |
 
-> Push faqat aniq ruxsat bilan (knowledge.md §2.6). Hozircha hech narsa push qilinmagan.
+> Push Mirobidning aniq ruxsati bilan qilindi (knowledge.md §2.6). Force push, branch
+> o'chirish yoki yangi repo ochish **qilinmagan**.
+>
+> `mars-backend` ni o'z terminalidan yuborish:
+> `git -C mars-backend push LMS-JAMOL feat/dev-server-and-lms-seed`
+> (remote'da bu branch hali yo'q — yangi branch sifatida yaratiladi).
+> Yechim 2: GitHub → Settings → Access → `official-m` → **Write**.
 
 ---
 
