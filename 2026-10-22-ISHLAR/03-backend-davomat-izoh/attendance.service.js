@@ -11,8 +11,36 @@ const { applyScope, scopeBranchIds, isValidScope, SCOPE_BRANCH, SCOPE_MENTOR, SC
 const { addCoins } = require('./coin.service')
 const { incrementConsecutiveAbsent, resetConsecutiveAbsent, checkAndFreezeIfNeeded } = require('./student.service')
 const { createAttendancePayment } = require('./payment.service')
+const { isLessonClosed } = require('../config/lessonSchedule')
 
 const RATE_PER_PRESENT_STUDENT = 14551 // UZS per present student per lesson
+
+/**
+ * Bir dars kunidagi belgilar — "dars tugagach belgilanmagan = kelmadi" qoidasi bilan.
+ *
+ * Dars tugagan bo'lsa, belgilanmagan o'quvchi kelmadi deb hisoblanadi: guruhdagi
+ * barcha o'quvchilar uchun belgi qo'yilgan hisoblanadi. Dars hali tugamagan
+ * bo'lsa (bugun, dars vaqti kelmagan) faqat yozilgan belgilar hisobga olinadi.
+ *
+ * @param {object} session  attendance record (date va records[])
+ * @param {number} studentCount  guruhdagi o'quvchilar soni
+ * @param {Date} [now]
+ * @returns {{total: number, present: number, absent: number}}
+ */
+const countMarks = (session, studentCount, now = new Date()) => {
+    const records = session.records || []
+    const present = records.filter((record) => record.present).length
+
+    if (isLessonClosed(session.date, now) && studentCount > 0) {
+        const total = studentCount
+        const safePresent = Math.min(present, total)
+        return { total, present: safePresent, absent: total - safePresent }
+    }
+
+    const total = records.length
+    const safePresent = Math.min(present, total)
+    return { total, present: safePresent, absent: total - safePresent }
+}
 
 /**
  * Validate and format records array
@@ -533,11 +561,11 @@ const getGroupAttendance = async (groupId, query = {}, scope, role) => {
 
     let totalMarks = 0
     let presentMarks = 0
+    const studentCount = (group.students || []).length
     for (const session of sessions) {
-        for (const r of (session.records || [])) {
-            totalMarks += 1
-            if (r.present) presentMarks += 1
-        }
+        const marks = countMarks(session, studentCount)
+        totalMarks += marks.total
+        presentMarks += marks.present
     }
 
     const attendanceRate = totalMarks > 0 ? Math.round((presentMarks / totalMarks) * 100) : 0
@@ -698,10 +726,9 @@ const getAttendanceStats = async (query = {}, scope, role) => {
 
     // Apply scope filter
     if (scope && isValidScope(scope)) {
-        if (scope.type === SCOPE_BRANCH) {
-            // Need to filter by group.branch or mentor.branch
-            // For stats, we'll use aggregation with $lookup
-            // For now, we'll handle in aggregation
+        if (scope.type === SCOPE_MENTOR) {
+            // A mentor only sees their own records.
+            filter.mentor = scope.accountId
         } else if (scope.type === SCOPE_NONE) {
             return {
                 totalSessions: 0,
@@ -713,30 +740,27 @@ const getAttendanceStats = async (query = {}, scope, role) => {
         }
     }
 
-    // For now, simplified - proper branch filtering would need aggregation
-    const [totalSessions, presentAggregation, absentAggregation] = await Promise.all([
-        Attendance.countDocuments(filter),
-        Attendance.aggregate([
-            { $match: filter },
-            { $unwind: '$records' },
-            { $match: { 'records.present': true } },
-            { $count: 'total' }
-        ]),
-        Attendance.aggregate([
-            { $match: filter },
-            { $unwind: '$records' },
-            { $match: { 'records.present': false } },
-            { $count: 'total' }
-        ])
-    ])
+    // The sessions are read with their group, because the "unmarked = absent"
+    // rule needs to know how many students the group has.
+    const sessions = await Attendance.find(filter)
+        .populate('group', 'name branch students course')
+        .populate('mentor', 'firstName lastName fullname branch')
+        .lean()
 
-    const presentCount = presentAggregation[0]?.total || 0
-    const absentCount = absentAggregation[0]?.total || 0
+    let presentCount = 0
+    let absentCount = 0
+    for (const session of sessions) {
+        const studentCount = (session.group?.students || []).length
+        const marks = countMarks(session, studentCount)
+        presentCount += marks.present
+        absentCount += marks.absent
+    }
+
     const totalStudentMarks = presentCount + absentCount
     const attendanceRate = totalStudentMarks > 0 ? Math.round((presentCount / totalStudentMarks) * 100) : 0
 
     return {
-        totalSessions,
+        totalSessions: sessions.length,
         totalStudentMarks,
         presentCount,
         absentCount,

@@ -76,6 +76,23 @@ shu bazada faqat eski `ceo@mars.test` hisobi bor edi — demo ma'lumotlar esa
 
 ---
 
+### 3.2 Yangi qoida — dars tugagach belgilanmagan = kelmadi
+
+Dars tugagach, belgi qo'yilmagan o'quvchi **kelmadi (X)** deb hisoblanadi.
+
+- Mentor matritsasi: o'tgan dars kunlaridagi bo'sh kataklar X bilan ko'rsatiladi
+  (yumshoq qizil, "dars tugagan" belgisi). Kelgusi kunlar — "belgilanmagan" (savol).
+  Bugungi ustun yana ham belgi qo'yish uchun ochiq.
+- Dars tugash vaqti: `LESSON_END_HOUR = 20` (`courseSchedule.js` frontendda,
+  `lessonSchedule.js` backendda).
+- Matritsa har daqiqada qayta chiziladi — dars tugishi bilan kataklar o'z-o'zidan
+  X ga aylanadi.
+- Backend: `getGroupAttendance` va `getAttendanceStats` ham shu qoidada hisoblaydi.
+- Yon-yo'q tuzatish: `GET /attendance/stats` endi mentor faqat o'z yozuvlarini ko'radi
+  (avval markazdagi barcha mentorlar ko'rinardi).
+
+---
+
 ## 5. Tekshiruv natijalari
 
 | Nima | Natija |

@@ -211,3 +211,31 @@
   login -> Guruhlar (9 guruh) -> guruh ichidagi o'quvchilar, mentor login ->
   Dashboard ("Salom, Sardor", 9 guruh, 15 o'quvchi) - 0 page error.
 - Lokal commit: `mars-backend` `6a3114e` (feat(dev): seed the real database with one command).
+
+### BP-06 - Belgilanmagan o'quvchi dars tugagach "kelmadi" bo'ladi
+
+- **Mas'ul:** Mirobid
+- **Holat:** DONE
+- Qoida: dars tugagach, belgi qo'yilmagan o'quvchi **kelmadi (X)** deb hisoblanadi.
+  Oldingi qoida ("belgilanmagan o'quvchi kelmadi deb hisoblanmaydi") bekor qilindi.
+- Mentor panelida matritsa: o'tgan dars kunlaridagi bo'sh kataklar endi X bilan
+  ko'rsatiladi (yumshoq qizil — "dars tugagan" belgisi). Kelgusi kunlar "belgilanmagan"
+  (savol belgisi) qoladi; bugungi ustun yana ham belgi qo'yish uchun ochiq.
+- Dars tugash vaqti `LESSON_END_HOUR = 20` (frontend: `mars-mentor/src/config/courseSchedule.js`,
+  backend: `mars-backend/src/config/lessonSchedule.js`). Jadval statik — admin paneli
+  belgilaganda yangilanadi.
+- Matritsa har daqiqa qayta chiziladi: dars tugishi bilan kataklar o'z-o'zidan
+  X ga aylanadi, mentor sahifani yangilashi shart emas.
+- Backend hisobdorligi ham xuddi shu qoidaga o'tdi: `getGroupAttendance` va
+  `getAttendanceStats` da tugagan darsdagi belgilanmagan o'quvchilar "kelmadi"
+  hisobida. Dars hali tugamagan bo'lsa (bugun) faqat yozilgan belgilar hisoblanadi.
+- Yon-yo'q tuzatish: `GET /attendance/stats` da mentor markazdagi barcha mentorlarning
+  statistikasini ko'raryapti — endi faqat o'zining.
+- Tekshiruv: backend 258/258 test yashil (3 ta yangi: tugagan darsdagi belgilanmagan
+  o'quvchi hisobda kelmadi, statistika ham xil, guruhga o'quvchi qo'shish);
+  brauzerda 9 ta o'tgan dars kunida X, 4 ta kelgusi kunda "?", bugungi ustunda
+  belgi tanlash, 0 page error.
+- Lokal commit: `mars-mentor` `b3ec1ee`, `mars-backend` `22699bf`.
+- **Ochiq:** dars kuni bo'lgan, lekin mentor umuman yozmagan kunlar (butunlay
+  yozuvsiz) matritsada X bo'ladi, ammo backend umumiy jami (darslar soni)ga
+  qo'shilmaydi — "kutilgan darslar" hisobi keyingi qadam.

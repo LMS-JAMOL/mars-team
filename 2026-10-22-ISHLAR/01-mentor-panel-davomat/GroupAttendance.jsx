@@ -17,6 +17,7 @@ import {
   lessonDaysOfMonth,
   toKey,
   fromKey,
+  isLessonClosed,
   DEFAULT_LESSON_WEEKDAYS,
 } from '../config/courseSchedule'
 
@@ -30,6 +31,10 @@ import {
  *
  * Only today can be filled in: hovering a cell shows the checkmark and the
  * cross, clicking one stores the mark immediately. There is no Save button.
+ *
+ * **Qoida:** dars tugagach, belgilanmagan o'quvchi "kelmadi" (X) deb hisoblanadi.
+ * Dars tugash vaqti o'tgan kunlardagi bo'sh kataklar shunday ko'rsatiladi;
+ * dars tugagan kunlarda belgi qo'yish yoki o'zgartirish mumkin.
  *
  * The coin side of the business rule is not handled here yet.
  */
@@ -58,6 +63,9 @@ export default function GroupAttendance() {
   const { group, history, groupStatus, historyStatus } = useSelector((s) => s.attendance)
 
   const today = todayKey()
+  // The clock ticks so the matrix turns by itself when the lesson ends: an
+  // unmarked student becomes "absent" without the mentor refreshing anything.
+  const [now, setNow] = useState(() => new Date())
   const [cursor, setCursor] = useState(() => {
     const now = new Date()
     return { year: now.getFullYear(), month: now.getMonth() }
@@ -73,6 +81,13 @@ export default function GroupAttendance() {
     const now = new Date()
     setCursor({ year: now.getFullYear(), month: now.getMonth() })
   }, [currentMonth])
+
+  // Every minute the clock is refreshed: when the lesson ends, the unmarked
+  // cells turn into "absent" on their own.
+  useEffect(() => {
+    const timer = setInterval(() => setNow(new Date()), 60000)
+    return () => clearInterval(timer)
+  }, [])
 
   useEffect(() => {
     if (!groupId) return
@@ -95,6 +110,16 @@ export default function GroupAttendance() {
 
   // Today is the lesson that can be marked.
   const editableKey = today
+
+  // Dars tugagan kunlar: shu kunlarda belgilanmagan o'quvchi "kelmadi" (X)
+  // deb hisoblanadi. Kelgusi kunlar hech qachon "tugagan" bo'lmaydi.
+  const closedKeys = useMemo(() => {
+    const closed = new Set()
+    for (const key of days) {
+      if (isLessonClosed(key, now)) closed.add(key)
+    }
+    return closed
+  }, [days, now])
 
   // The lesson that can still be marked: today.
   // The columns are the course's lesson days; today is always included so the
@@ -269,7 +294,13 @@ export default function GroupAttendance() {
                   <X size={11} /> kelmagan
                 </span>
                 <span className="badge badge-ghost badge-sm gap-1">
-                  <HelpCircle size={11} /> belgilanmagan
+                  <HelpCircle size={11} /> belgilanmagan (dars tugamagan)
+                </span>
+                <span
+                  className="badge badge-ghost badge-sm gap-1 bg-error/15 text-error"
+                  title="Dars tugagan, lekin belgi qo‘yilmagan — kelmadi deb hisoblanadi"
+                >
+                  <X size={11} /> dars tugagan
                 </span>
                 <span className="badge badge-warning badge-sm gap-1">
                   <Pencil size={11} /> o‘zgartirilgan
@@ -342,6 +373,9 @@ export default function GroupAttendance() {
                         {days.map((key) => {
                           const isEditable = key === editableKey
                           const value = isEditable ? marks[id] : markFor(id, key)
+                          // The lesson is over and nobody marked the student:
+                          // they count as absent.
+                          const autoAbsent = value === undefined && closedKeys.has(key)
                           return (
                             <td
                               key={key}
@@ -352,12 +386,17 @@ export default function GroupAttendance() {
                               {isEditable ? (
                                 <CellEditor
                                   value={value}
+                                  autoAbsent={autoAbsent}
                                   busy={savingCell === id}
                                   reason={changeReason(id, key)}
                                   onPick={(present) => handlePick(id, present)}
                                 />
                               ) : (
-                                <StaticMark value={value} reason={changeReason(id, key)} />
+                                <StaticMark
+                                  value={value}
+                                  autoAbsent={autoAbsent}
+                                  reason={changeReason(id, key)}
+                                />
                               )}
                             </td>
                           )
@@ -399,8 +438,19 @@ export default function GroupAttendance() {
 }
 
 /** A day that is already recorded. */
-function StaticMark({ value, reason }) {
+function StaticMark({ value, reason, autoAbsent }) {
   if (value === undefined) {
+    // The lesson is over: an unmarked student counts as absent.
+    if (autoAbsent) {
+      return (
+        <span
+          className="inline-grid place-items-center w-7 h-7 rounded-lg bg-error/15 text-error"
+          title="Dars tugadi — belgilanmagan o‘quvchi kelmadi deb hisoblanadi"
+        >
+          <X size={16} strokeWidth={3} />
+        </span>
+      )
+    }
     return <HelpCircle size={15} className="text-base-content/25 mx-auto" />
   }
   const mark = value ? (
@@ -422,7 +472,7 @@ function StaticMark({ value, reason }) {
 }
 
 /** Today: the checkmark and the cross appear on hover, a click stores the mark. */
-function CellEditor({ value, busy, reason, onPick }) {
+function CellEditor({ value, busy, reason, onPick, autoAbsent }) {
   const [hover, setHover] = useState(false)
 
   /** The mark is stored, so the buttons close; they open again on the next hover. */
@@ -431,19 +481,26 @@ function CellEditor({ value, busy, reason, onPick }) {
     onPick(present)
   }
 
+  // An unmarked student of a finished lesson already counts as absent.
+  const shown = value !== undefined ? value : autoAbsent ? false : undefined
+
   return (
     <div
       className="relative grid place-items-center h-10"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      {value !== undefined && (
+      {shown !== undefined && (
         <span
           className={`absolute inline-grid place-items-center w-7 h-7 rounded-lg ${
-            value ? 'bg-success text-success-content' : 'bg-error text-error-content'
+            shown
+              ? 'bg-success text-success-content'
+              : value === undefined
+                ? 'bg-error/15 text-error'
+                : 'bg-error text-error-content'
           } ${hover ? 'opacity-0' : 'opacity-100'} transition-opacity`}
         >
-          {value ? <Check size={16} strokeWidth={3} /> : <X size={16} strokeWidth={3} />}
+          {shown ? <Check size={16} strokeWidth={3} /> : <X size={16} strokeWidth={3} />}
         </span>
       )}
 
