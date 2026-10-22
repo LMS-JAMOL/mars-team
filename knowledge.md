@@ -86,12 +86,27 @@ Agar biznes qoidasi noma'lum bo'lsa, uni o'zing belgilama. Tegishli savolni PM y
 
 - **Lokal commit** — har doim mumkin (ishni yo'qotmaslik uchun).
 - **Push** — faqat Mirobidning aniq ruxsati bilan. Ruxsat so'ralmagan bo'lsa, push qilma.
-- **Boshqa engineerning reposiga** (`nF-2781/<panel>`) push qilish ham ruxsatga bog'liq.
+- **`nF-2781` tashkilotiga (shaxsiy repo'lar) — UMUMAN push qilinmaydi.** Bu qoida
+  hech qanday sharoitda yumshatilmaydi: ruxsat so'rash ham kerak emas, faqat
+  "nF-2781 ga push qilma" deyish yetarli. Ish faqat jamoa tashkiloti
+  (`LMS-JAMOL`)ga yuboriladi.
 - **Jamoaning tashkiloti reposiga** (`LMS-JAMOL/<repo>`) push qilish albatta ruxsatga bog'liq.
 - Yangi repo ochish (`gh repo create`) — ruxsatga bog'liq.
 - Force push (`--force`, `--force-with-lease`), branch yoki tag o'chirish — **albatta** ruxsatga bog'liq.
 - Token yoki `push: false` bo'lgan repo — muvaffaqiyatsiz bo'lsa, muqobil yo'lni **so'rang**,
   o'zgartirib yubormang.
+
+**Qaysi remote ishlatiladi (2026-10-22 holati):**
+
+| Repo | Ishlatiladigan remote | Ishlatilmaydigan |
+|------|----------------------|------------------|
+| `mars-ceo` | `origin` → `LMS-JAMOL/mars-ceo` | — |
+| `mars-mentor` | `org` → `LMS-JAMOL/mars-mentor` | `origin` → `nF-2781/...` |
+| `mars-team` (workspace) | `org` → `LMS-JAMOL/mars-team` | `origin` → `nF-2781/...` |
+| `mars-backend` | `LMS-JAMOL` → `LMS-JAMOL/MARS-backend` | `origin` → `nF-2781/...` |
+
+Push qilishdan oldin `git remote -v` bilan **aniq remote nomini** tekshir — `origin`
+nomini avtomatik ishlatma.
 
 Push qilishdan oldin remote'ni tekshir: `git remote -v` — qaysi orga ketayotganini aniq bilish uchun.
 
