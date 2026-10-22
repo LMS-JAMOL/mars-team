@@ -261,3 +261,23 @@
   mars-mentor, mars-admin muvaffaqiyatli; qolgan 7 panelda `node_modules` yo'q.
 - Commit: 10 panelda `style(navbar): one solid navy in the light theme, plain bar in
   night mode`.
+
+### Global dizayn - sidebar tepa bloki (brend ko'k)
+
+- **Mas'ul:** Mirobid
+- **Holat:** DONE
+- Sidebar'ning **tepa qismi** (MARS wordmark + "MENTOR PORTALI" / "CEO PORTALI" /
+  "Admin Portal") endi **brend ko'kiga** (`#172A4E`) bo'ldi — navbar bilan bir xil.
+  Light rejimda chap yuqori burchak **bir butun ko'k blok** bo'ladi.
+- Wordmark ko'k fonda **oq** bo'ldi (avvalgi `theme === 'night' ? 'white' : 'navy'`
+  sharti olib tashlandi — endi har doim oq); halqa brend sariqicha qoldi.
+- Navy "badge" ikon o'rniga **sariq halqa** (`MarsIcon variant="ring"`) — navy
+  belgi ko'k fonda ko'rinmasdi.
+- Blok ostidagi chegara `border-white/10`.
+- 10 ta panel: admin, audit, branch-manager, ceo, finance, frontend, intern,
+  mentor, parent, tutor.
+- Tekshiruv (brauzerda): light rejimda brend bloki `rgb(23,42,78)` va navbar
+  `rgb(23,42,78)` — bir xil ko'k blok; night rejimda brend bloki ko'k, navbar
+  `rgb(20,21,25)`; wordmark `rgb(255,255,255)`; 0 page error. Build: mars-ceo,
+  mars-mentor, mars-admin muvaffaqiyatli.
+- Commit: 10 panelda `style(sidebar): paint the brand block in the brand navy`.

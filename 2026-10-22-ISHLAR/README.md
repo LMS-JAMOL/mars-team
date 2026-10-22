@@ -100,6 +100,13 @@ navbar va sidebar bir xil rangda bo'ladi. Ko'k navbar ustida ikonkalar va ism oq
 
 Tuzatilgan panellar: `09-navbar-gradient-10-panel/`.
 
+### 3.4 Sidebar tepa bloki — brend ko'k
+
+Sidebar'ning tepa qismi (MARS wordmark + portal nomi) endi brend ko'kiga
+(`#172A4E`) bo'ldi — navbar bilan bir xil. Light rejimda chap yuqori burchak bir
+butun ko'k blok bo'ladi. Wordmark ko'k fonda oq, halqa sariq; navy "badge" ikon
+o'rniga sariq halqa (`variant="ring"`).
+
 ---
 
 ## 5. Tekshiruv natijalari
