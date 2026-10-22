@@ -10,6 +10,16 @@ export default function Topbar() {
   const user = useSelector((s) => s.auth.user)
   const theme = useSelector((s) => s.ui.theme)
 
+  // The navbar carries one solid brand navy, and only in the light theme.
+  // The night theme keeps the plain dark bar, so the top-left corner stays
+  // the same colour as the sidebar.
+  const isDark = theme === 'night'
+  const barClass = isDark
+    ? 'bg-base-100 border-b border-base-300'
+    : 'bg-[#172A4E] border-b border-white/10'
+  const onBar = isDark ? '' : 'text-white/85 hover:bg-white/10'
+  const ringGap = isDark ? 'ring-offset-base-100' : 'ring-offset-transparent'
+
   const handleLogout = async () => {
     await dispatch(logoutServer())
     dispatch(logout())
@@ -19,10 +29,10 @@ export default function Topbar() {
   const name = user?.fullname || 'CEO'
 
   return (
-    <header className="h-16 shrink-0 bg-gradient-to-r from-[#172A4E] to-[#35426F] border-b border-white/10 flex items-center justify-between px-4 gap-4">
+    <header className={`h-16 shrink-0 flex items-center justify-between px-4 gap-4 ${barClass}`}>
       <button
         onClick={() => dispatch(toggleSidebar())}
-        className="btn btn-ghost btn-square text-white/85 hover:bg-white/10"
+        className={`btn btn-ghost btn-square ${onBar}`}
         aria-label="Toggle sidebar"
       >
         <Menu size={20} />
@@ -31,7 +41,7 @@ export default function Topbar() {
       <div className="flex items-center gap-2">
         <button
           onClick={() => dispatch(toggleTheme())}
-          className="btn btn-ghost btn-square text-white/85 hover:bg-white/10"
+          className={`btn btn-ghost btn-square ${onBar}`}
           aria-label="Toggle theme"
           title={theme === 'night' ? 'Light mode' : 'Dark mode'}
         >
@@ -42,17 +52,17 @@ export default function Topbar() {
             separate action so the avatar is not a menu. */}
         <Link
           to="/profile"
-          className="btn btn-ghost gap-2 normal-case text-white/85 hover:bg-white/10"
+          className={`btn btn-ghost gap-2 normal-case ${onBar}`}
           title="Profile"
           aria-label="Profile"
         >
           <div className="avatar">
-            <div className="w-8 h-8 rounded-full overflow-hidden ring ring-primary ring-offset-transparent ring-offset-1 bg-base-300">
+            <div className={`w-8 h-8 rounded-full overflow-hidden ring ring-primary ring-offset-1 bg-base-300 ${ringGap}`}>
               {user?.avatar ? (
                 <img src={user.avatar} alt={name} className="w-full h-full object-cover" />
               ) : (
                 <div className="w-full h-full grid place-items-center">
-                  <UserCircle size={20} className="text-white/70" />
+                  <UserCircle size={20} className={isDark ? 'text-base-content/70' : 'text-white/70'} />
                 </div>
               )}
             </div>
@@ -62,7 +72,7 @@ export default function Topbar() {
 
         <button
           onClick={handleLogout}
-          className="btn btn-ghost btn-square text-error hover:bg-white/10"
+          className={`btn btn-ghost btn-square text-error ${onBar}`}
           title="Chiqish"
           aria-label="Chiqish"
         >

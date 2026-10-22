@@ -8,6 +8,15 @@ export default function Topbar() {
   const navigate = useNavigate()
   const user = useSelector((s) => s.auth.user)
   const theme = useSelector((s) => s.ui.theme)
+  // The navbar carries one solid brand navy, and only in the light theme.
+  // The night theme keeps the plain dark bar, so the top-left corner stays
+  // the same colour as the sidebar.
+  const isDark = theme === 'night'
+  const barClass = isDark
+    ? 'bg-base-100 border-b border-base-300'
+    : 'bg-[#172A4E] border-b border-white/10'
+  const onBar = isDark ? '' : 'text-white/85 hover:bg-white/10'
+  const ringGap = isDark ? 'ring-offset-base-100' : 'ring-offset-transparent'
 
   const handleLogout = () => {
     dispatch(logout())
@@ -15,10 +24,10 @@ export default function Topbar() {
   }
 
   return (
-    <header className="h-16 shrink-0 bg-gradient-to-r from-[#172A4E] to-[#35426F] border-b border-white/10 flex items-center justify-between px-4 gap-4">
+    <header className={`h-16 shrink-0 flex items-center justify-between px-4 gap-4 ${barClass}`}>
       <button
         onClick={() => dispatch(toggleSidebar())}
-        className="btn btn-ghost btn-square text-white/85 hover:bg-white/10"
+        className={`btn btn-ghost btn-square ${onBar}`}
         aria-label="Toggle sidebar"
       >
         <span className="text-xl">☰</span>
@@ -27,7 +36,7 @@ export default function Topbar() {
       <div className="flex items-center gap-2">
         <button
           onClick={() => dispatch(toggleTheme())}
-          className="btn btn-ghost btn-square text-white/85 hover:bg-white/10"
+          className={`btn btn-ghost btn-square ${onBar}`}
           aria-label="Toggle theme"
           title={theme === 'night' ? 'Light mode' : 'Dark mode'}
         >
@@ -35,9 +44,9 @@ export default function Topbar() {
         </button>
 
         <div className="dropdown dropdown-end">
-          <div tabIndex={0} role="button" className="btn btn-ghost gap-2 normal-case text-white/85 hover:bg-white/10">
+          <div tabIndex={0} role="button" className={`btn btn-ghost gap-2 normal-case ${onBar}`}>
             <div className="avatar">
-              <div className="w-8 rounded-full ring ring-primary ring-offset-transparent ring-offset-1">
+              <div className={`w-8 rounded-full ring ring-primary ring-offset-1 ${ringGap}`}>
                 <img
                   src={
                     user?.avatar ||

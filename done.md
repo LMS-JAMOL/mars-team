@@ -240,22 +240,24 @@
   yozuvsiz) matritsada X bo'ladi, ammo backend umumiy jami (darslar soni)ga
   qo'shilmaydi — "kutilgan darslar" hisobi keyingi qadam.
 
-### Global dizayn - navbar gradienti (barcha panellar)
+### Global dizayn - navbar rangi (barcha panellar)
 
 - **Mas'ul:** Mirobid
 - **Holat:** DONE
-- Barcha 10 ta panelning **navbar** (topbar) brend gradientiga o'kildi:
-  `#172A4E` dan `#35426F` gacha (`bg-gradient-to-r`).
-- Topbardagi ikonkalar, foydalanuvchi nomi va tugmalar oq rangga (`text-white/85`)
-  o'tdi — to'q fonda o'qilishi uchun; avatar halqasining bo'shlig'i endi shaffof
-  (`ring-offset-transparent`), sahifa yorug' rangi emas.
-- **Sidebar o'z rangida qoldi** (`bg-base-100`) — foydalanuvchi talabi: gradient
-  faqat navbarga.
+- Barcha 10 ta panelning **navbar** (topbar) brend ko'kiga o'kildi: **bir xil (solid)
+  `#172A4E`** — gradient emas.
+- **Faqat light rejimda** (`winter`) navbar ko'k; **night rejimda** eski ko'rinish
+  qoladi (`bg-base-100`) — shunda navbar va sidebar **bir xil rangda** bo'ladi
+  (chap yuqori burchak bir butun qora maydon).
+- Ko'k navbar ustida ikonkalar, foydalanuvchi nomi va tugmalar oq (`text-white/85`),
+  avatar halqasining bo'shlig'i shaffof; night rejimda ular avvalgidek
+  `base-content` rangida.
+- **Sidebar o'z rangida qoldi** (`bg-base-100`) — foydalanuvchi talabi.
 - Tuzatilgan panel: admin, audit, branch-manager, ceo, finance, frontend, intern,
   mentor, parent, tutor (10 ta).
-- Tekshiruv: brauzerda CEO va mentor panelida `linear-gradient(to right,
-  rgb(23,42,78) → rgb(53,66,111))` o'lchandi, sidebar `backgroundImage: none`
-  (o'z rangi), tugmalar oq (85%), 0 page error. Build: mars-ceo, mars-mentor,
-  mars-admin muvaffaqiyatli; qolgan 7 panelda `node_modules` yo'q (build
-  qilinmagan), o'zgarish faqat className satrlarida.
-- Commit: 10 panelda `style(navbar): paint the top bar with the MARS navy gradient`.
+- Tekshiruv (mentor paneli, brauzerda): night rejimda `headerBg = rgb(20,21,25)` va
+  `asideBg = rgb(20,21,25)` — bir xil; light rejimda `headerBg = rgb(23,42,78)`,
+  `asideBg = rgb(255,255,255)`, tugmalar oq (85%), 0 page error. Build: mars-ceo,
+  mars-mentor, mars-admin muvaffaqiyatli; qolgan 7 panelda `node_modules` yo'q.
+- Commit: 10 panelda `style(navbar): one solid navy in the light theme, plain bar in
+  night mode`.

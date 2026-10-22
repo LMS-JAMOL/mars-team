@@ -91,11 +91,12 @@ Dars tugagach, belgi qo'yilmagan o'quvchi **kelmadi (X)** deb hisoblanadi.
 - Yon-yo'q tuzatish: `GET /attendance/stats` endi mentor faqat o'z yozuvlarini ko'radi
   (avval markazdagi barcha mentorlar ko'rinardi).
 
-### 3.3 Navbar gradienti — 10 ta panel
+### 3.3 Navbar rangi — 10 ta panel
 
-Barcha panelning **navbar** (topbar) brend gradientiga o'kildi: `#172A4E` → `#35426F`
-(`bg-gradient-to-r`). Ikonkalar, foydalanuvchi nomi va tugmalar oq (`text-white/85`),
-avatar halqasining bo'shlig'i shaffof. **Sidebar o'z rangida qoldi** (`bg-base-100`).
+Navbar (topbar) **bir xil (solid) brend ko'kiga** `#172A4E` o'kildi — gradient emas.
+**Faqat light rejimda**; night rejimda eski ko'rinish (`bg-base-100`) qoladi, shunda
+navbar va sidebar bir xil rangda bo'ladi. Ko'k navbar ustida ikonkalar va ism oq
+(`text-white/85`). **Sidebar o'z rangida** (`bg-base-100`).
 
 Tuzatilgan panellar: `09-navbar-gradient-10-panel/`.
 
