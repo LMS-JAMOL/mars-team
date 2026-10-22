@@ -1,0 +1,62 @@
+/**
+ * MARS IT School — kurslar va ularning dars jadvali.
+ *
+ * Markazda faqat IT yo'nalishlari bor:
+ *   1) Frontend
+ *   2) Backend
+ *   3) AI
+ *
+ * Bitta kurs 12 oy davomida o'qitiladi va haftada kamida 3 kunda
+ * (dushanba, chorshanba, juma) dars bo'ladi.
+ *
+ * **Jadval hozircha statik.** Uni admin paneli orqali belgilash kerak
+ * (`schedule` maydoni guruh yoki kurs modelida) — shu paytga kadar shu
+ * qiymat ishlatiladi.
+ */
+
+/** Haftaning kunlari: 0 = yakshanba … 6 = shanba */
+export const DEFAULT_LESSON_WEEKDAYS = [1, 3, 5] // dushanba, chorshanba, juma
+
+/** Bitta kursning davomiyligi (oy) */
+export const COURSE_MONTHS = 12
+
+export const COURSES = {
+  Frontend: { short: 'FE', lessonWeekdays: DEFAULT_LESSON_WEEKDAYS, months: COURSE_MONTHS },
+  Backend: { short: 'BE', lessonWeekdays: DEFAULT_LESSON_WEEKDAYS, months: COURSE_MONTHS },
+  AI: { short: 'AI', lessonWeekdays: DEFAULT_LESSON_WEEKDAYS, months: COURSE_MONTHS },
+}
+
+/** Guruhning kursiga mos jadval (noma'lum kurs uchun — umumiy qoida). */
+export function scheduleFor(courseName) {
+  return COURSES[courseName] || {
+    short: (courseName || '?').slice(0, 2).toUpperCase(),
+    lessonWeekdays: DEFAULT_LESSON_WEEKDAYS,
+    months: COURSE_MONTHS,
+  }
+}
+
+/** Oyning dars kunlari (YYYY-MM-DD kalitlari). */
+export function lessonDaysOfMonth(year, month, lessonWeekdays = DEFAULT_LESSON_WEEKDAYS) {
+  const days = []
+  const last = new Date(year, month + 1, 0).getDate()
+  for (let day = 1; day <= last; day += 1) {
+    const date = new Date(year, month, day)
+    if (lessonWeekdays.includes(date.getDay())) {
+      days.push(toKey(date))
+    }
+  }
+  return days
+}
+
+/** 'YYYY-MM-DD' */
+export function toKey(date) {
+  return new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000)
+    .toISOString()
+    .slice(0, 10)
+}
+
+/** 'YYYY-MM-DD' kalitidan Date */
+export function fromKey(key) {
+  const [y, m, d] = key.split('-').map(Number)
+  return new Date(y, m - 1, d)
+}

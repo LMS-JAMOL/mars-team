@@ -1,90 +1,48 @@
-=== mars-team (workspace) ===
-b6a76b2 refactor: track mars-ceo as a panel gitlink like the other 11 panels
- mars-ceo                                           |    1 +
- mars-ceo/.gitignore                                |    6 -
- mars-ceo/README.md                                 |  147 -
- mars-ceo/docs/CEO-DASHBOARD.md                     |  119 -
- mars-ceo/docs/PROBLEM-12-STUDENTS-REPORT.md        |  170 -
- mars-ceo/index.html                                |   17 -
- mars-ceo/package-lock.json                         | 3431 --------------------
- mars-ceo/package.json                              |   34 -
- mars-ceo/public/favicon.svg                        |    4 -
- mars-ceo/public/mars-icon.svg                      |    3 -
- mars-ceo/public/mars-logo-white.svg                |   10 -
- mars-ceo/public/mars-logo.svg                      |   10 -
- mars-ceo/public/mars-mark.svg                      |   18 -
- mars-ceo/public/textures/README.md                 |    7 -
- mars-ceo/public/textures/mars-surface-2k.jpg       |  Bin 750547 -> 0 bytes
- mars-ceo/public/vite.svg                           |    1 -
- mars-ceo/src/App.jsx                               |   76 -
- mars-ceo/src/app/store.js                          |   62 -
- mars-ceo/src/components/layout/DashboardLayout.jsx |   46 -
- mars-ceo/src/components/layout/Sidebar.jsx         |   97 -
- mars-ceo/src/components/layout/Topbar.jsx          |   71 -
- mars-ceo/src/components/ui/ChartEmptyState.jsx     |   11 -
- mars-ceo/src/components/ui/EntityForm.jsx          |   98 -
- mars-ceo/src/components/ui/EntityView.jsx          |  155 -
- mars-ceo/src/components/ui/MarsIcon.jsx            |   53 -
- mars-ceo/src/components/ui/MarsLogo.jsx            |   53 -
- mars-ceo/src/components/ui/PageHeader.jsx          |   26 -
- mars-ceo/src/components/ui/StatCard.jsx            |   40 -
- mars-ceo/src/components/ui/Toaster.jsx             |   26 -
- mars-ceo/src/config/entityViews.jsx                |  141 -
- mars-ceo/src/config/nav.js                         |   33 -
- mars-ceo/src/features/auth/authSlice.js            |  143 -
- .../src/features/entities/createEntitySlice.js     |   92 -
- mars-ceo/src/features/entities/entities.js         |   38 -
- mars-ceo/src/features/finance/financeSlice.js      |  200 --
- .../src/features/report/studentsReportSlice.js     |   61 -
- mars-ceo/src/features/stats/statsSlice.js          |   95 -
- mars-ceo/src/features/ui/uiSlice.js                |   23 -
- mars-ceo/src/index.css                             |  403 ---
- mars-ceo/src/lib/api.js                            |  141 -
- mars-ceo/src/lib/authTokens.js                     |   14 -
- mars-ceo/src/lib/isComponentType.js                |   17 -
- mars-ceo/src/lib/useChartColors.js                 |   34 -
- mars-ceo/src/main.jsx                              |   24 -
- mars-ceo/src/pages/Attendance.jsx                  |  156 -
- mars-ceo/src/pages/Dashboard.jsx                   |  246 --
- mars-ceo/src/pages/Financial.jsx                   |  451 ---
- mars-ceo/src/pages/Homework.jsx                    |  144 -
- mars-ceo/src/pages/Login.jsx                       |  230 --
- mars-ceo/src/pages/NotFound.jsx                    |   41 -
- mars-ceo/src/pages/Profile.jsx                     |  221 --
- mars-ceo/src/pages/StudentsReport.jsx              |  526 ---
- mars-ceo/src/routes/ErrorBoundary.jsx              |   82 -
- mars-ceo/src/routes/ProtectedRoute.jsx             |   47 -
- mars-ceo/vite.config.js                            |   33 -
- 55 files changed, 1 insertion(+), 8427 deletions(-)
-
-=== mars-ceo ===
- src/components/ui/PageHeader.jsx           |   26 +
- src/components/ui/StatCard.jsx             |   40 +
- src/components/ui/Toaster.jsx              |   26 +
- src/config/entityViews.jsx                 |  141 ++
- src/config/nav.js                          |   33 +
- src/features/auth/authSlice.js             |  143 ++
- src/features/entities/createEntitySlice.js |   92 +
- src/features/entities/entities.js          |   38 +
- src/features/finance/financeSlice.js       |  200 ++
- src/features/report/studentsReportSlice.js |   61 +
- src/features/stats/statsSlice.js           |   95 +
- src/features/ui/uiSlice.js                 |   23 +
- src/index.css                              |  403 ++++
- src/lib/api.js                             |  141 ++
- src/lib/authTokens.js                      |   14 +
- src/lib/isComponentType.js                 |   17 +
- src/lib/useChartColors.js                  |   34 +
- src/main.jsx                               |   24 +
- src/pages/Attendance.jsx                   |  156 ++
- src/pages/Dashboard.jsx                    |  246 ++
- src/pages/Financial.jsx                    |  451 ++++
- src/pages/Homework.jsx                     |  144 ++
- src/pages/Login.jsx                        |  230 ++
- src/pages/NotFound.jsx                     |   41 +
- src/pages/Profile.jsx                      |  221 ++
- src/pages/StudentsReport.jsx               |  526 +++++
- src/routes/ErrorBoundary.jsx               |   82 +
- src/routes/ProtectedRoute.jsx              |   47 +
- vite.config.js                             |   33 +
- 54 files changed, 8427 insertions(+)
+01-guard-tizimi/
+  ErrorBoundary.jsx  (3 KB)
+  NotFound.jsx  (2 KB)
+  ProtectedRoute.jsx  (2 KB)
+02-problem-12/
+  backend/
+    dev-server.js  (1 KB)
+    lms-fixtures.js  (4 KB)
+    seed-lms.js  (1 KB)
+    seed-runtime.js  (4 KB)
+    student.router.js  (5 KB)
+    studentsReport.service.js  (12 KB)
+    test-students-report.js  (8 KB)
+  frontend/
+    StudentsReport.jsx  (20 KB)
+    studentsReportSlice.js  (2 KB)
+03-logo-va-dizayn/
+  favicon.svg  (0 KB)
+  index.css  (11 KB)
+  index.html  (1 KB)
+  MarsLogo.jsx  (2 KB)
+04-tuzatilgan-xatolar/
+  authSlice.js  (4 KB)
+  Sidebar.jsx  (3 KB)
+  StatCard.jsx  (2 KB)
+05-hujjatlar/
+  CEO-DASHBOARD.md  (5 KB)
+  PROBLEM-12-STUDENTS-REPORT.md  (6 KB)
+  README.md  (6 KB)
+  task.md  (26 KB)
+06-commitlar/
+  commitlar.txt  (3 KB)
+  fayl-ro'yxati.txt  (5 KB)
+  holat.txt  (1 KB)
+  test-students-report-natija.txt  (2 KB)
+07-ceo-panel-yangi-sahifalar/
+  App.jsx  (3 KB)
+  GroupDetail.jsx  (6 KB)
+  Groups.jsx  (5 KB)
+  nav.js  (1 KB)
+08-mentor-panel-bugungi/
+  courseSchedule.js  (2 KB)
+  GroupAttendance.jsx  (20 KB)
+  nav.js  (0 KB)
+  Sidebar.jsx  (6 KB)
+  studentsReportSlice.js  (6 KB)
+  Topbar.jsx  (3 KB)
+README.md  (10 KB)
