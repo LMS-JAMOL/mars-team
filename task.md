@@ -121,7 +121,7 @@ va shell (Sidebar) ishlashda davom etadi, boshqa sahifaga o'tilganda avtomatik t
 ### FE-04 — CEO Dashboard sahifalarini yaratish
 
 - **Mas'ullar:** Mirobid va unga biriktirilgan frontend engineerlar
-- **Holat:** BLOCKED
+- **Holat:** REVIEW
 - **Muddat:** 2026-10-31
 - **Bog'liq vazifa:** FE-03
 
@@ -155,6 +155,20 @@ muvaffaqiyatli. API integratsiyasi bo'sh javoblarda tekshirildi, ijobiy ma'lumot
 grafiklarni QA qilish haqiqiy ma'lumot kiritilmaguncha BLOKLANGAN. Mirobid doimiy
 `.env` bazasiga haqiqiy ma'lumotni o'zi berishini tanladi; sun'iy yoki test yozuvlari
 qo'shilmadi.
+
+**Tekshiruv natijasi (2026-10-23):** Mirobid ruxsati bilan backend `.env` dagi
+CEO loginidan faqat lokal API orqali autentifikatsiya va read-only QA uchun
+foydalanildi; credential/tokenlar chiqarilmadi va biznes ma'lumotlari
+o'zgartirilmadi. `/ceo/me`, dashboard statistikasi, moliya summary va payment/coin
+detail endpointlari, student finance so'rovlari hamda Students Report statistikasi,
+ro'yxati, profil va attendance endpointlari `200` qaytardi. Analitika va reportlarda
+haqiqiy yozuvlar bor; order va homework statistikasi bo'sh, UI esa empty-state
+ko'rsatadi. Headless Edge'da Login, Dashboard, Financial, Profile, Students Report,
+Attendance va Homework marshrutlari ochildi; ko'rinadigan xato alerti yoki React
+runtime exception bo'lmadi. CEO build muvaffaqiyatli, statistika so'rovlari mustaqil
+loading/error holatiga ajratildi va 2 regression testi o'tdi. Boshqa engineerlarga
+biriktirilgan umumiy EntityView sahifalarining QA/review'i tasdiqlanmagani uchun
+FE-04 umumiy vazifasi `REVIEW` holatida qoldi.
 
 **Natija (12-muammo — Students Count by Course, 2026-10-20):** CEO uchun
 `/students-report` sahifasi qurildi.
@@ -266,7 +280,7 @@ ish sifatida ochiq qoladi.
 ### FE-06 — Frontend hamkorligi va QA
 
 - **Mas'ullar:** Barcha Frontend engineerlar
-- **Holat:** TODO
+- **Holat:** IN PROGRESS
 - **Muddat:** 2026-10-31
 
 **Vazifalar:**
@@ -279,6 +293,13 @@ ish sifatida ochiq qoladi.
 **Bajarish mezonlari:**
 - Review va xatolar qayd etilgan bo'lishi.
 - Ish tegishli keyingi bosqichga tayyor bo'lishi.
+
+**Mirobid bo'yicha tekshiruv (2026-10-23):** CEO frontend build va statistika
+so'rovlari regression testi o'tdi; autentifikatsiyalangan read-only runtime QA
+natijalari FE-04 ostida qayd etildi. Login, Dashboard, Financial, Profile, Students
+Report, Attendance va Homework marshrutlari headless Edge'da xato alertisiz ochildi.
+Boshqa frontend engineerlarning vazifalari va umumiy jamoaviy review natijalari
+ushbu tekshiruv doirasiga kirmagani sababli FE-06 `IN PROGRESS` bo'lib qoladi.
 
 ---
 

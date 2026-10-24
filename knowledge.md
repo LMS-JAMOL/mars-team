@@ -525,21 +525,61 @@ Har bir frontend ilovada (`mars-admin`, `mars-frontend`, `mars-student`, va bosh
    - `/mars-logo-white.svg` — to'q fonlar uchun oq va olovrang vektor logotip.
    - `/mars-icon.svg` — mustaqil aylana piktogrammasi.
 
-### 11.6. Dars jadvali (hali statik)
+### 11.6. Guruh dars jadvali va dars vaqtlari
 
-> **2026-10-22 qaror (Mirobid):** dars kunlari **admin paneli qilinmaguncha statik**
-> qoladi. Sabab: jadvalni tasdiqlash uchun admin panelida boshqaruv kerak, u hali
-> yozilmagan (FE-01 / FE-02).
+> **Tasdiqlangan qoida:** markazning ish kuni 08:00 da boshlanadi, ammo birinchi
+> dars 09:00 da boshlanadi. Yangi guruh ochilayotganda admin jadvalni kun va vaqt
+> bo'yicha belgilaydi; guruhning jadvali erkin matn emas, `scheduleSlots` orqali
+> saqlanadi.
 
-| Qoida | Qiymat | Qayerda |
-|-------|--------|---------|
-| Dars kunlari | dushanba, chorshanba, juma (`[1, 3, 5]`) | `mars-mentor/src/config/courseSchedule.js`, `mars-backend/src/config/lessonSchedule.js` |
-| Dars tugash vaqti | 20:00 (`LESSON_END_HOUR`) | xuddi shu fayllar |
-| Dars tugagach, belgilanmagan o'quvchi | **kelmadi (X)** deb hisoblanadi | `attendance.service.js` (`countMarks`), mentor matritsasi |
-| Kurs davomiyligi | 12 oy | `COURSES` |
+| Qoida | Qiymat |
+|-------|--------|
+| Markaz ish boshlashi | 08:00 |
+| Dars davomiyligi | Rovno 60 minut |
+| Darslar orasidagi tanaffus | 10 minut |
+| Tushlik | 12:30–14:00; bu vaqt oralig'ida dars bo'lmaydi |
+| Oxirgi darsning eng kech tugashi | 20:00; hech bir dars bundan kech tugamasligi shart |
+| Guruh uchun kunlar | Admin haftaning istalgan kunini tanlaydi; jadval guruh kesimida belgilanadi |
 
-Admin paneli tayyor bo'lgach, jadval `schedule` maydoni (guruh yoki kurs modelida)
-orqali boshqariladi va ushbu jadval almashtiriladi.
+Ruxsat etilgan haftalik dars slotlari:
+
+| Boshlanishi | Tugashi |
+|-------------|---------|
+| 09:00 | 10:00 |
+| 10:10 | 11:10 |
+| 11:20 | 12:20 |
+| 14:00 | 15:00 |
+| 15:10 | 16:10 |
+| 16:20 | 17:20 |
+| 17:30 | 18:30 |
+| 18:40 | 19:40 |
+
+Slotlar 60 minutlik dars va kamida 10 minutlik tanaffus hisobidan qat'iy
+belgilangan. Shuning uchun admin boshqa boshlanish vaqtini, tushlik oralig'idagi
+vaqtni yoki 20:00 dan keyin tugaydigan darsni tanlay olmaydi. Masalan, 18:40 da
+boshlangan dars 19:40 da tugaydi va ruxsat etiladi. Bir mentorning guruhlari bir
+kunda ustma-ust tushmasligi va ular orasida kamida 10 minut bo'lishi kerak;
+turli mentorlar bir xil slotda dars o'tishi mumkin.
+
+Jadvalni yaratishdagi texnik talablar:
+
+- Admin va CEO yangi guruh ochishda kamida bitta kun-vaqt slotini tanlaydi.
+- Backend `scheduleSlots` ni ham tekshiradi: kun nomi, ruxsat etilgan start/end,
+  60 minutlik davomiylik, takroriy slotlar va mentor jadvalidagi to'qnashuvlar.
+  Frontend cheklovi backend tekshiruvining o'rnini bosa olmaydi.
+- Rejalashtirilgan har bir `LessonSession` 60 minut bo'ladi; API davomiylikni
+  yubormasa ham 60 minut qo'llanadi, boshqa qiymat rad etiladi.
+- Mentor davomat matritsasi yangi guruhning `scheduleSlots` dagi kunlarini
+  ko'rsatadi. Slotlari yo'q eski guruhlar uchun avvalgi dushanba/chorshanba/juma
+  kunlari faqat orqaga mos fallback sifatida qoladi.
+- Haftalik Admin kalendarida 08:00 dan oldin va 22:00 dan keyin bir soatdan
+  bo'sh joy ko'rsatiladi; 07:00 va 23:00 belgilari bo'sh qoladi va yozilmaydi.
+
+Asosiy joylar: `mars-admin/src/config/groupSchedule.js`,
+`mars-admin/src/components/ui/EntityForm.jsx`, `mars-backend/src/utils/groupSchedule.js`,
+`mars-backend/src/router/group.router.js`, `mars-backend/src/services/group.service.js`,
+`mars-backend/src/router/session.router.js` va
+`mars-mentor/src/pages/GroupAttendance.jsx`.
 
 ### 11.7. UI Komponentlarini Qurish Bo'yicha AI uchun Qoidalar (Rules for AI)
 
