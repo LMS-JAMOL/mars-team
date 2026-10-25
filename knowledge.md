@@ -84,6 +84,24 @@ Agar biznes qoidasi noma'lum bo'lsa, uni o'zing belgilama. Tegishli savolni PM y
 
 **Push faqat aniq ruxsat bilan.** Quyidagi qoidalar qat'iy:
 
+### 2.7. Darslar va ish grafigi (MARS IT School)
+
+**Ish vaqti:**
+- **Ofis/mentorlik ishining boshlanishi:** soat 08:00
+- **Darslar:** soat **09:00** da boshlanadi
+- **Bir darsning davomiyligi:** **60 minut** (rovno 1 soat)
+- **Tanaffus:** har dars orasida **10 minut**
+- **Obed (tushlik):** **12:30 – 14:00** (soat 12:30 dan 14:00 gacha) — bu vaqt oralig'ida dars bo'lmaydi
+- **Darslar soni / yakun vaqti:** darslar **admin tomonidan belgilangan grafik** asosida o'tkaziladi. Barcha darslar majburiy ravishda soat 08:00 da tugashi shart **EMAS**. Ba'zi guruhlar darslarini **19:40** da ham tugatishi mumkin, **lekin hech qachon 20:00 dan kech tugatilmaydi**. Hech qaysi guruhning oxirgi darsi soat **20:00 dan keyin** bo'lishi mumkin emas.
+
+**Grafik prinsipi:**
+- **Bir dars:** 09:00–10:00, keyingi dars: 10:10–11:10 (tanaffus 10 minut)
+- Tushlik tanaffusi: 12:30–14:00 oralig'ida darslar to'xtatiladi
+- **Admin panelda** yangi guruh ochishda **faqat admin tomonidan belgilangan jadval (grafik)** asosida vaqtlarni belgilash mumkin
+- **Mentorlar** o'z guruhlarining dars vaqti bilan **admin** tomonidan belgilangan grafikni hisobga olgan holda tanishadi
+- Guruhning dars vaqti **admin panelidagi scheduleSlots** orqali belgilangan vaqtda bo'ladi
+- Dars tugash vaqti hisoblashda `LESSON_END_HOUR = 20` chegarasi saqlanadi — **max oxirgi dars tugash vaqti 20:00**
+
 - **Lokal commit** — har doim mumkin (ishni yo'qotmaslik uchun).
 - **Push** — faqat Mirobidning aniq ruxsati bilan. Ruxsat so'ralmagan bo'lsa, push qilma.
 - **`nF-2781` tashkilotiga (shaxsiy repo'lar) — UMUMAN push qilinmaydi.** Bu qoida
