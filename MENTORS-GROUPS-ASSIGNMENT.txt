@@ -1,0 +1,29 @@
+MENTORLAR VA GURUHLAR (to'g'ridan-to'g'ri bajarildi)
+===============================================
+
+MENTORLAR (4 ta) - parol: Mentor123!
+-------------------------------------
+1. Azim Karimov   - +998901111111 - azim@mars.uz   - ID: 6adc60295ec42ce37af201b3
+2. Bek Toshmatov  - +998902222222 - bek@mars.uz    - ID: 6adc60295ec42ce37af201b4
+3. Carol Rahimova - +998903333333 - carol@mars.uz  - ID: 6adc602a5ec42ce37af201b5
+4. Davlet Nazarov - +998904444444 - davlet@mars.uz - ID: 6adc602a5ec42ce37af201b6
+
+GURUHLAR (5 ta) - har birida 2 ta mentor
+----------------------------------------
+| Guruh   | Mentor 1 | Mentor 2 | Kunlar        | Izoh |
+|---------|----------|----------|---------------|------|
+| Alpha   | Azim     | Bek      | Mon, Wed      | Toq kunlar |
+| Beta    | Bek      | Carol    | Mon, Wed      | Toq kunlar |
+| Gamma   | Carol    | Davlet   | Mon, Wed      | Toq kunlar |
+| Delta   | Davlet   | Azim     | Tue, Thu      | Juft kunlar |
+| Epsilon | Azim     | Carol    | Tue, Thu      | Juft kunlar (bog'lanish jufti) |
+
+QOIDAGA MUVOFIQ:
+- Toq kunlarda (Dushanba, Chorshanba): Azim-Bek, Bek-Carol, Carol-Davlet ishlaydi (3 ta guruh)
+- Juft kunlarda (Seshanba, Payshanba): Davlet-Azim, Azim-Carol ishlaydi (2 ta guruh)
+- "Qogan 2 tasi juft kunlada ishlasin" - Azim va Carol juft kunlarda (Delta va Epsilon) birga ishlaydi ✓
+- Har bir guruhda aniq 2 ta mentor ✓
+- Jami 5 ta guruh, 4 ta mentor ✓
+
+Script: mars-backend/scripts/add-mentors-groups-schedule.js
+Bajarilgan: $(date)
