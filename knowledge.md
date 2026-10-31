@@ -110,3 +110,32 @@ Izoh: panel localStorage'da hech narsa saqlamaydi — faqat `access_token`. Barc
 2. Tizimga **"barber coin"** qo'shiladi.
 3. Qaysi variant tanlansa, yagona qoida: balans yana `students.coinBalance` da qoladi, barcha yozuvlar `/coins` tranzaksiya tarixiga tushadi — Space Shop'ga qayta ulash kerak emas, shop o'z ishida davom etadi.
 4. Mars-admin'dagi **Coin Shop** bo'limi hali yo'q (yuqorida 5-bo'limda ro'yxatda) — BM tizimi bilan birga ko'rib chiqiladi.
+
+## 7. Login ID / parol tizimi — to'liq yopildi (2026-10-31)
+
+**Talaba paneli (space) kirishi:** 7 xonali `loginId` + 5 xonali parol. Admin panelda talaba yaratilganda avtomat generatsiya bo'ladi (`student.service.js`: `crypto.randomInt`), javobda bir marta plaintext qaytariladi, MongoDB'da esa **faqat bcrypt hash** (`students.password`, `pre('save')` hook orqali).
+
+### 7.1. Backfill (mavjud 16 talaba)
+- Skript: `mars-backend/scripts/backfill-student-credentials.js` — `loginId` null bo'lgan barcha talabalarga ID+parol beradi (qayta ishga tushirish xavfsiz).
+- Muhim: sxemada `loginId` **`immutable: true`** — `doc.save()` immutable maydonni qaytarib tashlaydi (yozilgandek ko'rinadi, DB ga tushmaydi). Shuning uchun skript native `collection.updateOne` + qo'lda `hashPassword()` ishlatadi.
+- Natija: 16/16 talabada `loginId`, `students.password` = `$2b$12$...` hash.
+- Tekshiruv: `POST /api/v1/auth/login` `loginId + password` bilan token qaytaradi.
+- **Bitta talabani qayta generatsiya:** `node scripts/reset-student-credentials.js <loginId | phone | _id>` — eski ID/parol darhol ishlamay qoladi, yangi juftlik chiqadi (xato topilmasa exit 1). Test: `1073907/50274` → `2185076/20316` ishladi, eskilari 401 qaytardi.
+
+### 7.2. Admin panelda credentials banneri
+- `createEntitySlice.createOne` endi `{ item, credentials }` qaytaradi (endpoint allaqachon `credentials` yuboradi, lekin frontend uni tashlab yuborayotgan edi).
+- `EntityView`: talaba yaratilgandan keyin bir martalik dialog — Login ID (7 xona) + Parol (5 xona), «Nusxalash» tugmasi. Yopilgandan keyin qayta ko'rsatilmaydi.
+- i18n: yangi 6 ta fraza `src/locales/ru.phrases.json` ga qo'shildi (`npm run i18n:check` — 0 xato).
+
+### 7.3. Ochiq qolganlar
+- `mars-ceo` / `mars-tutor` / `mars-frontend` loginlari hali telefon/parol (bu xodimlar paneli — `loginId` shart emas, xohlasa alohida yangilanadi).
+
+### 7.4. Session 15 daqiqada uzilmaydi (space panel)
+Muammo: access token `JWT_ACCESS_EXPIRES_IN` = 15 daqiqada tugardi, keyin `useMe()` 401 qaytardi va `AppLayout` tokenni o'chirib `/login` ga yuborardi — ya'ni har 15 daqiqada qayta kirish.
+
+Yechim (`space/src/services/apiClient.ts`):
+1. **Keep-alive**: 30 soniyada bir tekshiradi — tokenning `exp` dan 60 soniya qolganda jimjimor `POST /auth/refresh` qiladi. Hech qanday so'rov 401 ga uchramaydi.
+2. **Fallback refresh**: avval httpOnly cookie (`space_refresh`), ishlamasa localStorage dagi `refresh_token` body orqali (panel `127.0.0.1`, backend `localhost` bo'lsa cookie yuborilmaydi).
+3. `clearTokens()` — chiqish va haqiqatan o'lgan sessiyada (refresh ham muvaffaqiyatsiz) ishlatiladi.
+
+Tekshiruv (Playwright + Chrome): login → access token 40 soniyaga almashtirildi → cookie o'chirildi → 45 soniyada token avtomat yangilandi (qolgan ~14.7 daqi), sahifa `/main-page` da qoldi, login formasi chiqmadi.
